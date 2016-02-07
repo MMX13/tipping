@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<body ng-app="TippingApp" ng-controller="appCtrl">
+    {% verbatim %}
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">Tipping</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a>Home</a></li>
+                    <li><a>Scoreboard</a></li>
+                    <li><a>Tipping</a></li>
+                    <li><a>Past Tips</a></li>
+                    <li><a>Draw</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% endverbatim %}
+        Welcome {{ request.user.username }}
+        {% verbatim %}
+    </div>
+
+    {% endverbatim %}
+
+</body>
+{% endblock %}
