@@ -25,8 +25,14 @@
     </nav>
     <div class="container">
         {% endverbatim %}
-        Welcome {{ request.user.username }}
+        <p>Welcome {{ request.user.username }}</p>
         {% verbatim %}
+
+        <div class="row"><div class="col-md-8 col-md-offset-2"><a>Scoreboard</a></div></div>
+        <div class="row"><div class="col-md-8 col-md-offset-2"><a>Tips</a></div></div>
+        <div class="row"><div class="col-md-8 col-md-offset-2"><a>Past Tips</a></div></div>
+        <div class="row"><div class="col-md-8 col-md-offset-2"><a>Ladder</a></div></div>
+        <div class="row"><div class="col-md-8 col-md-offset-2"><a>Draw</a></div></div>
     </div>
 
     {% endverbatim %}
