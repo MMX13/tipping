@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url('^accounts/', include('registration.backends.simple.urls')),
+    url('^api/', include('api.urls')),
     #url('^login', auth_views.login, name="login"),
     url('^$', views.base)
 ]
