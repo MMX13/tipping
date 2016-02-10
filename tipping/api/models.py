@@ -40,4 +40,4 @@ class Tip(models.Model):
     user = models.ForeignKey(User)
     round = models.ForeignKey(Round)
     game = models.ForeignKey(Game)
-    team = models.ForeignKey(Team)
+    team = models.ForeignKey(Team, null=True, blank=True)
