@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated, BasePermission
 from .serializers import GameSerializer, TipSerializer
 from .models import Game, Round, Tip
 # Create your views here.
@@ -14,7 +15,7 @@ def default_tips(round, user):
         tip = Tip(user=user, round=game.round, game=game)
         tip.save()
 
-class GameViewSet(ListAPIView):
+class GamesView(ListAPIView):
     serializer_class = GameSerializer
 
     def get_queryset(self):
@@ -25,18 +26,46 @@ class GameViewSet(ListAPIView):
         round_object = Round.objects.get(round=round)
         return Game.objects.filter(round=round_object)
 
-class RoundTips(ListAPIView):
+class RoundTipsView(ListAPIView):
     serializer_class = TipSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
-        round = get_current_round()
+
+        round = self.request.query_params.get('round', None)
         user = self.request.user
+
+        current_round = get_current_round()
+        if round is None:
+            round = current_round
+        else:
+            round = int(round)
+
+        # Get the tips for the round
         tips = Tip.objects.filter(user=user, round=round)
-        if not tips:
+
+        # If its a future round, or an invalid round, return nothing
+        if round>current_round or round<1:
+            return tips
+
+        # If it's the current round, and the user hasn't tipped yet, populate with defaults
+        elif round==current_round and not tips:
             default_tips(round, user)
-        tips = Tip.objects.filter(user=user, round=round, game__status="P")
+            tips = Tip.objects.filter(user=user, round=round)
+
+        # What happens if there are no tips for a previous round???
+
         return tips
 
-class TipsAPIView(UpdateAPIView):
+class TipPermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if obj.user == request.user:
+            if obj.game.status=='P':
+                return True
+        return False
+
+class UpdateTipView(RetrieveUpdateAPIView):
     serializer_class = TipSerializer
+    permission_classes = (IsAuthenticated, TipPermission)
+
     queryset = Tip.objects.all()
