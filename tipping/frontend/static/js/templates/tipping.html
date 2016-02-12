@@ -1,0 +1,13 @@
+<div ng-repeat="(x, tip) in tips">
+    <row class="text-center">
+        <div class="col-xs-12">
+            {{tip.game_time}}<br/>{{tip.stadium}}
+        </div>
+        <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.home_team}" ng-click="updateTip(x, tip.home_team)">
+            {{tip.home_team}}
+        </div>
+        <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.away_team}" ng-click="updateTip(x, tip.away_team)">
+            {{tip.away_team}}
+        </div>
+    </row>
+</div>

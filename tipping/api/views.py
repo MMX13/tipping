@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from .serializers import GameSerializer, TipSerializer
@@ -59,13 +61,14 @@ class RoundTipsView(ListAPIView):
 
 class TipPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
+        print(request.user)
         if obj.user == request.user:
             if obj.game.status=='P':
                 return True
         return False
 
+
 class UpdateTipView(RetrieveUpdateAPIView):
     serializer_class = TipSerializer
     permission_classes = (IsAuthenticated, TipPermission)
-
     queryset = Tip.objects.all()

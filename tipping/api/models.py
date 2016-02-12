@@ -33,6 +33,8 @@ class Game(models.Model):
     start_time = models.DateTimeField()
     home_team = models.ForeignKey(Team, related_name='home_team')
     away_team = models.ForeignKey(Team, related_name='away_team')
+    home_score = models.IntegerField(null=True, blank=True)
+    away_score = models.IntegerField(null=True, blank=True)
     stadium = models.CharField(max_length=30)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="P")
 
