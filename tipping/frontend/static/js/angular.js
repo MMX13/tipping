@@ -44,11 +44,40 @@ tippingApp.controller("TipCtrl", function($scope, $http){
 });
 
 tippingApp.controller("DrawCtrl", function($scope, $http){
-    draw = [];
-    $http.get("/api/games/").
-        then(function(data){
-            $scope.draw=data.data;
-        })
+    $scope.show = -1;
+
+    $scope.updateDraw = function(round){
+        if (round!=""){
+            round="?round="+round;
+        }
+        $http.get("/api/games/"+round).
+            then(function(data){
+                $scope.draw=[];
+                $scope.draw=data.data;
+                console.log($scope.draw)
+                console.log($scope.draw[0].round);
+                $scope.round=$scope.draw[0].round;
+            })
+    }
+
+    $scope.changeRound = function(change){
+        round = $scope.round+change;
+        if ((round>0) && (round<29)){
+            console.log(round)
+            $scope.updateDraw(round)
+        }
+    }
+
+    $scope.showDetails= function(id){
+        if ($scope.show == id){
+            $scope.show = -1;
+        } else {
+            $scope.show = id;
+        }
+    }
+
+
+    $scope.updateDraw("")
 
 });
 
