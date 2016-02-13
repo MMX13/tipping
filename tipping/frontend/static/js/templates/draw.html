@@ -1,3 +1,23 @@
+{{1+1}}
 <div ng-repeat="game in draw">
-    {{ game }}
+    <div class="row">
+        <div class="col-xs-6 text-left">
+            <div class="row">
+                <div class="col-xs-2">
+                    <img ng-src="/static/images/{{game.home_team}}.png" class="col-xs-12 img-responsive" />
+                </div>
+                <div class="col-xs-10">
+                    <p>{{game.home_team}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 text-right">
+            <div class="col-xs-10">
+                    <p>{{game.away_team}}</p>
+            </div>
+            <div class="col-xs-2">
+                    <img ng-src="/static/images/{{game.away_team}}.png" class="col-xs-12 img-responsive" />
+            </div>
+        </div>
+    </div>
 </div>
