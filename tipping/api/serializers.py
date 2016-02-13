@@ -14,6 +14,8 @@ class GameSerializer(serializers.ModelSerializer):
         fields = ('fixture_id', 'round', 'start_time', 'home_team', 'away_team', 'home_score', 'away_score', 'stadium', 'status')
 
 class TipSerializer(serializers.ModelSerializer):
+    game = GameSerializer(read_only=True)
+
     game_time = serializers.CharField(read_only=True, source='game.start_time')
     stadium = serializers.CharField(read_only=True, source='game.stadium')
     home_team = serializers.CharField(read_only=True, source='game.home_team')

@@ -6,6 +6,12 @@ import json
 import time
 from api.models import Round, Team, Game
 
+
+def get_current_round():
+    round = Round.objects.get(status="O")
+    return round.round
+
+
 def round_setup():
     for round_num in range(1,27):
         r = Round(round=round_num)
@@ -68,3 +74,36 @@ def full_sync():
         # set round as completed
         # set next round as open
         # set reminder_sent as false
+
+def update_games():
+    games = []
+    # draw from foxsports
+
+    for game in games:
+        if game["match_status"]=="Full Time":
+            stored_game = Game.objects.get(fixture_id=game["fixture_id"])
+            if stored_game.status!="C":
+                stored_game.status="C"
+                stored_game.home_score=game["team_A"]["score"]
+                stored_game.away_score=game["team_B"]["score"]
+                stored_game.save()
+    update_rounds()
+
+def update_rounds():
+    round = get_current_round()
+    if all([game.status=="C" for game in Game.objects.filter(round=round)]):
+
+        # Close current round
+        current_round = Round.objects.get(round=round)
+        current_round.status="C"
+        current_round.save()
+
+        # Open new round
+        new_round = Round.objects.get(round=round+1)
+        new_round.status="O"
+        new_round.save()
+
+        update_scores()
+
+def update_scores():
+    pass
