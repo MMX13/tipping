@@ -106,8 +106,11 @@ def update_scores():
             if tip.game.status!="C":
                 break
 
+
+            if tip.team is None:
+                print("No tip")
             # Home team wins and user tipped home team
-            if tip.game.home_score>tip.game.away_score and \
+            elif tip.game.home_score>tip.game.away_score and \
                             tip.team == tip.game.home_team:
                 score_total += 1
                 print("Correct tip")
@@ -116,16 +119,15 @@ def update_scores():
             elif tip.game.away_score>tip.game.home_score and \
                             tip.team == tip.game.away_team:
                 score_total += 1
-                print("Incorrect Tip")
+                print("Correct Tip")
 
             # Draw (non tippers aren't awarded points)
             elif tip.game.home_score == tip.game.away_score and \
                             tip.team != None:
                 score_total += 1
                 print("Draw")
-
             else:
-                print("No tip")
+                print("Incorrect tip")
 
 
         print("Score total: "+str(score_total))
