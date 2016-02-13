@@ -4,7 +4,8 @@ import requests
 import json
 
 import time
-from api.models import Round, Team, Game
+from django.contrib.auth.models import User
+from api.models import Round, Team, Game, Tip, RoundScore
 
 
 def get_current_round():
@@ -79,15 +80,64 @@ def update_games():
     games = []
     # draw from foxsports
 
+    update_required = False
     for game in games:
         if game["match_status"]=="Full Time":
             stored_game = Game.objects.get(fixture_id=game["fixture_id"])
             if stored_game.status!="C":
+                update_required =True
                 stored_game.status="C"
                 stored_game.home_score=game["team_A"]["score"]
                 stored_game.away_score=game["team_B"]["score"]
                 stored_game.save()
-    update_rounds()
+
+    if update_required:
+        update_scores()
+        update_rounds()
+
+
+def update_scores():
+
+    round=get_current_round()
+
+    for user in User.objects.all():
+        score_total = 0
+        for tip in Tip.objects.filter(user=user, round=round):
+            if tip.game.status!="C":
+                break
+
+            # Home team wins and user tipped home team
+            if tip.game.home_score>tip.game.away_score and \
+                            tip.team == tip.game.home_team:
+                score_total += 1
+                print("Correct tip")
+
+            # Away team wins and user tipped away team
+            elif tip.game.away_score>tip.game.home_score and \
+                            tip.team == tip.game.away_team:
+                score_total += 1
+                print("Incorrect Tip")
+
+            # Draw (non tippers aren't awarded points)
+            elif tip.game.home_score == tip.game.away_score and \
+                            tip.team != None:
+                score_total += 1
+                print("Draw")
+
+            else:
+                print("No tip")
+
+
+        print("Score total: "+str(score_total))
+            # No score for no tips
+        try:
+            round_score = RoundScore.objects.get(user=user, round=round)
+        except RoundScore.DoesNotExist:
+            round_score = RoundScore(user=user, round=Round.objects.get(round=round))
+        round_score.score = score_total
+        round_score.save()
+
+
 
 def update_rounds():
     round = get_current_round()
@@ -103,7 +153,8 @@ def update_rounds():
         new_round.status="O"
         new_round.save()
 
-        update_scores()
+        # Award bonus points
 
-def update_scores():
-    pass
+        print("Round complete")
+    else:
+        print("Round not complete")

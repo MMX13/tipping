@@ -27,6 +27,12 @@ class Round(models.Model):
     def __unicode__(self):
        return str(self.round)
 
+class RoundScore(models.Model):
+    user = models.ForeignKey(User)
+    round = models.ForeignKey(Round)
+    score = models.IntegerField(default=0)
+
+
 class Game(models.Model):
     fixture_id = models.IntegerField(primary_key=True)
     round = models.ForeignKey(Round)
