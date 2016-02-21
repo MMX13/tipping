@@ -19,3 +19,52 @@ html
     background-size: cover;
     padding: 10px 0px 10px 0px;
 }
+
+.frontpage-link
+{
+    padding: 50px 10px 10px 10px;
+    font-size: 2em;
+    color:white;
+    text-shadow: 2px 2px #000000;
+
+
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #111111;
+    margin-bottom: 10px;
+}
+
+.scoreboard-link
+{
+    background: url('../images/chalkboard.jpg') no-repeat;
+    background-size: cover;
+}
+
+.tips-link
+{
+    background: url('../images/fieldnight.jpg') no-repeat;
+    background-size: cover;
+    background-position: left;
+}
+
+.past-tips-link
+{
+    background: url('../images/field.jpg') no-repeat;
+    background-size: cover;
+}
+
+.draw-link
+{
+    background: url('../images/ball.jpg') no-repeat;
+    background-size: cover;
+    background-position: left bottom;
+}
+
+.draw
+{
+    background-color: white;
+}
+
+.draw-row
+{
+    margin-top: 10px;
+}
