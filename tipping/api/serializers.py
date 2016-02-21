@@ -1,12 +1,16 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Round, Game, Tip
+from .models import Round, Game, Tip, RoundScore
 
 class RoundSerializer(serializers.ModelSerializer):
     class Meta:
         model = Round
         fields = ('round', 'status')
 
+class ScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoundScore
+        fields = ('user', 'round', 'score')
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:

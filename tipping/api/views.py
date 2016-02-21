@@ -3,8 +3,10 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from .serializers import GameSerializer, TipSerializer
-from .models import Game, Round, Tip
+from .serializers import GameSerializer, TipSerializer, ScoreSerializer
+from .models import Game, Round, Tip, RoundScore
+from django.http import JsonResponse
+import json
 # Create your views here.
 
 def get_current_round():
@@ -72,3 +74,15 @@ class UpdateTipView(RetrieveUpdateAPIView):
     serializer_class = TipSerializer
     permission_classes = (IsAuthenticated, TipPermission)
     queryset = Tip.objects.all()
+
+class RetrieveScoresView(ListAPIView):
+    serializer_class = ScoreSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        scores = RoundScore.objects.all()
+        scores = [score for score in scores if score.round.round<=get_current_round()]
+        return scores
+
+def CurrentRoundView(request):
+    return JsonResponse({'round': get_current_round()})
