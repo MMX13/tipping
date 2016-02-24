@@ -1,37 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
-Login Page
+<body style="padding-top: 10px; background-image: url('/static/images/bg-site3.png')">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1" style="background-color:white;">
+            <div class="row">
+                <div class="col-xs-12">
 
+                    {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %}
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+                    {% if next %}
+                    {% if user.is_authenticated %}
+                    <p>Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.</p>
+                    {% else %}
+                    <h2>Login</h2>
+                    {% endif %}
+                    {% endif %}
 
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
+                    <form method="post" action="{% url 'auth_login' %}">
+                        {% csrf_token %}
+                        <table>
+                            <tr>
+                                <td>{{ form.username.label_tag }} </td>
+                                <td>{{ form.username }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.password.label_tag }} </td>
+                                <td>{{ form.password }}</td>
+                            </tr>
+                        </table>
 
-<form method="post" action="{% url 'auth_login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+                        <input type="submit" value="Submit"/>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </form>
+                    <p>Need an account? Register <a href="/accounts/register/">here.</a></p>
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-<p>Need an account? Register <a href="/accounts/register/">here.</a> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
 
 {% endblock %}

@@ -1,15 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<body>
-<form method="post" action="{% url 'registration_register' %}">
-    {% csrf_token %}
-    <table>
-        <tr><td>Username: </td><td>{{ form.username }}</td></tr>
-        <tr><td>Email: </td><td>{{ form.email }}</td></tr>
-        <tr><td>Password: </td><td>{{ form.password1 }}</td></tr>
-        <tr><td>Password Confirmation: </td><td>{{ form.password2 }}</td></tr>
-    </table>
-    <input type="submit" value="Submit" />
-</form>
+<body style="padding-top: 10px; background-image: url('/static/images/bg-site3.png')">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1" style="background:white;">
+            <form method="post" action="{% url 'registration_register' %}">
+                {% csrf_token %}
+
+                <h2>Registration</h2>
+                <table>
+                    <tr><td>Username: </td><td>{{ form.username }}</td></tr>
+                    <tr><td>Email: </td><td>{{ form.email }}</td></tr>
+                    <tr><td>Password: </td><td>{{ form.password1 }}</td></tr>
+                    <tr><td>Password Confirmation: </td><td>{{ form.password2 }}</td></tr>
+                </table>
+                <input type="submit" value="Submit" />
+            </form><br/>
+        </div>
+    </div>
+</div>
+
 </body>
 {% endblock %}
