@@ -15,12 +15,63 @@ tippingApp.config(
                 templateUrl: 'static/js/templates/draw.html',
                 controller: 'DrawCtrl'
             }).
+            when('/scores',{
+                templateUrl: 'static/js/templates/scores.html',
+                controller: 'ScoreCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     });
+
+tippingApp.controller("BaseCtrl", function($scope, $location){
+    $scope.location = $location;
+});
+
+tippingApp.controller("ScoreCtrl", function($scope, $http){
+    $scope.getScores = function(){
+        $http.get("/api/scores/").
+            then(function(data){
+                scores = data.data
+
+                users=[];
+                rounds=[];
+                userscores = {};
+                usertotals={};
+
+                scores.forEach(function(s){
+                    if (users.indexOf(s.username)==-1){
+                        users.push(s.username);
+                        userscores[s.username] = {};
+                        usertotals[s.username] = 0;
+                    }
+                    if (rounds.indexOf(s.round)==-1){
+                        rounds.push(s.round);
+                    }
+                    userscores[s.username][s.round]=s.score;
+
+                });
+                console.log(userscores)
+
+                users.forEach(function(u){
+                    for(x=1;x<=rounds.length;x++){
+                        usertotals[u]+=userscores[u][x];
+                    }
+                });
+
+                $scope.usertotals = usertotals
+                $scope.userscores = userscores
+                $scope.rounds = rounds
+
+
+            });
+
+    }
+
+    $scope.getScores()
+});
 
 tippingApp.controller("TipCtrl", function($scope, $http){
     $scope.updateTip = function(i, tip_team){

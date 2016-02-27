@@ -2,15 +2,23 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Round, Game, Tip, RoundScore
 
+class UserSerializer(serializers.Serializer):
+    class Meta:
+        model = User
+        fields = ('username')
+
 class RoundSerializer(serializers.ModelSerializer):
     class Meta:
         model = Round
         fields = ('round', 'status')
 
 class ScoreSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    username = serializers.CharField(read_only=True, source='user.username')
+
     class Meta:
         model = RoundScore
-        fields = ('user', 'round', 'score')
+        fields = ('user', 'username', 'round', 'score')
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
