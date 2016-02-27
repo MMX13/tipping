@@ -5,11 +5,15 @@ tippingApp.config(
         $routeProvider.
             when('/', {
                 templateUrl: 'static/js/templates/home.html',
-                controller: 'HomeCtrl'
+                controller: 'BaseCtrl'
             }).
             when('/tips', {
                 templateUrl: 'static/js/templates/tipping.html',
                 controller: 'TipCtrl'
+            }).
+            when('/past', {
+                templateUrl: 'static/js/templates/past.html',
+                controller: 'PastTipCtrl'
             }).
             when('/draw',{
                 templateUrl: 'static/js/templates/draw.html',
@@ -103,10 +107,7 @@ tippingApp.controller("DrawCtrl", function($scope, $http){
         }
         $http.get("/api/games/"+round).
             then(function(data){
-                $scope.draw=[];
                 $scope.draw=data.data;
-                console.log($scope.draw)
-                console.log($scope.draw[0].round);
                 $scope.round=$scope.draw[0].round;
             })
     }
@@ -114,7 +115,6 @@ tippingApp.controller("DrawCtrl", function($scope, $http){
     $scope.changeRound = function(change){
         round = $scope.round+change;
         if ((round>0) && (round<29)){
-            console.log(round)
             $scope.updateDraw(round)
         }
     }
@@ -132,6 +132,45 @@ tippingApp.controller("DrawCtrl", function($scope, $http){
 
 });
 
-tippingApp.controller("HomeCtrl", function($scope){
+
+tippingApp.controller("PastTipCtrl", function($scope, $http){
+    $scope.show = -1;
+
+    $scope.updatePastTips = function(round){
+        if (round!=""){
+            round="?round="+round;
+        }
+        $http.get("/api/tips/"+round).
+            then(function(data){
+                $scope.pasttips=data.data;
+                $scope.round=$scope.pasttips[0].round;
+            });
+    }
+
+    $scope.changeRound = function(change){
+        console.log('Change: '+change);
+        round = $scope.round+change;
+        console.log('New round: '+round);
+        console.log('Current round: '+$scope.current_round)
+        if ((round>0) && (round<=$scope.current_round)){
+            console.log('Success');
+            $scope.updatePastTips(round)
+        }
+    }
+
+    $scope.showDetails = function(id){
+        if ($scope.show == id){
+            $scope.show = -1;
+        } else {
+            $scope.show = id;
+        }
+    }
+
+    $http.get("/api/round/").
+        then(function(data){
+            $scope.current_round=data.data["round"];
+            $scope.updatePastTips("")
+        });
+
 
 });

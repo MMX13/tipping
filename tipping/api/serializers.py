@@ -28,11 +28,14 @@ class GameSerializer(serializers.ModelSerializer):
 class TipSerializer(serializers.ModelSerializer):
     game = GameSerializer(read_only=True)
 
-    game_time = serializers.CharField(read_only=True, source='game.start_time')
+    start_time = serializers.CharField(read_only=True, source='game.start_time')
     stadium = serializers.CharField(read_only=True, source='game.stadium')
     home_team = serializers.CharField(read_only=True, source='game.home_team')
     away_team = serializers.CharField(read_only=True, source='game.away_team')
+    home_score = serializers.IntegerField(read_only=True, source='game.home_score')
+    away_score = serializers.IntegerField(read_only=True, source='game.away_score')
+    status = serializers.CharField(read_only=True, source='game.status')
 
     class Meta:
         model = Tip
-        fields = ('id', 'user', 'round', 'team', 'game', 'game_time', 'home_team', 'away_team', 'stadium')
+        fields = ('id', 'user', 'round', 'team', 'game', 'start_time', 'home_team', 'away_team', 'home_score', 'away_score', 'stadium', 'status')

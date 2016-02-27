@@ -64,7 +64,17 @@ html
     background-color: white;
 }
 
-.draw-row
+.winner
 {
-    margin-top: 10px;
+    font-weight: bold;
+}
+
+.correct
+{
+    color: #88FF88;
+}
+
+.incorrect
+{
+    color: #FF8888;
 }

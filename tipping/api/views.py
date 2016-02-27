@@ -57,8 +57,6 @@ class RoundTipsView(ListAPIView):
             default_tips(round, user)
             tips = Tip.objects.filter(user=user, round=round)
 
-        # What happens if there are no tips for a previous round???
-
         return tips
 
 class TipPermission(BasePermission):
