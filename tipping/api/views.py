@@ -6,18 +6,13 @@ from rest_framework.permissions import IsAuthenticated, BasePermission
 from .serializers import GameSerializer, TipSerializer, ScoreSerializer
 from .models import Game, Round, Tip, RoundScore
 from django.http import JsonResponse
+from background.draw_helper import default_tips
 import json
 # Create your views here.
 
 def get_current_round():
     round = Round.objects.get(status="O")
     return round.round
-
-def default_tips(round, user):
-    games = Game.objects.filter(round=round)
-    for game in games:
-        tip = Tip(user=user, round=game.round, game=game)
-        tip.save()
 
 class GamesView(ListAPIView):
     serializer_class = GameSerializer
