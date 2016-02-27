@@ -8,7 +8,9 @@ from django.contrib.auth.models import User
 from api.models import Round, Team, Game, Tip, RoundScore
 import logging
 
+ROUNDS = 26
 logger = logging.getLogger('root')
+logging.basicConfig(level=logging.INFO)
 
 def default_tips(round, user):
     games = Game.objects.filter(round=round)
@@ -21,14 +23,16 @@ def get_current_round():
     return round.round
 
 def round_setup():
-    for round_num in range(1,27):
+    for round_num in range(1, ROUNDS):
         r = Round(round=round_num)
         r.save()
 
 def initial_rounds_sync():
-    for round in range(1, 27):
+    for round in range(1, ROUNDS):
+        logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
-        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        #r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/113/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
         for game in json.loads(r.text):
             fixture_id = game["fixture_id"]
             round_object = Round.objects.get(round=round)
@@ -82,7 +86,10 @@ def update_games():
     numjobs = 2
     logger.info("Updating games...")
     logger.info("1/%s: Pulling update.", numjobs)
-    games = []
+
+    round = get_current_round()
+    r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/113/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+    games = json.loads(r.text)
     logger.info("Pull successful.")
     # draw from foxsports
 
@@ -93,16 +100,15 @@ def update_games():
         if game["match_status"]=="Full Time":
             stored_game = Game.objects.get(fixture_id=game["fixture_id"])
             if stored_game.status!="C":
-                logger.info("-Game finished, %s vs. %s. Updating stored info.", game["team_A"], game["team_B"])
+                logger.info("-Game finished, %s vs. %s. Updating stored info.", game["team_A"]["name"], game["team_B"]["name"])
                 update_required =True
                 stored_game.status="C"
                 stored_game.home_score=game["team_A"]["score"]
                 stored_game.away_score=game["team_B"]["score"]
                 stored_game.save()
 
-
+    logger.info("Games updated successfully.")
     if update_required:
-        logger.info("Games updated successfully.")
         update_scores()
         update_rounds()
 
@@ -110,13 +116,14 @@ def update_games():
 def update_scores():
     logger.info("Updating scores...")
 
-    bonus_point = True
     round=get_current_round()
 
     users = User.objects.all()
     numjobs = len(users)
     for i, user in enumerate(users):
-        logger.info("Updating scores for user %s, %s/%s", user.username, i, numjobs)
+
+        bonus_point = True
+        logger.info("Updating scores for user %s, %s/%s", user.username, i+1, numjobs)
 
         score_total = 0
         for tip in Tip.objects.filter(user=user, round=round):
@@ -147,10 +154,10 @@ def update_scores():
                 logger.info("-Game was drawn")
             else:
                 bonus_point = False
-                logger.info("User tipped incorrectly")
+                logger.info("-User tipped incorrectly")
 
         if bonus_point:
-            print("-User was awarded bonus point")
+            logger.info("-User was awarded bonus point")
             score_total+=1
 
         logger.info("Score calculated for user: %s", score_total)
