@@ -140,8 +140,7 @@ def kickoff_checker():
             game.status='O'
             game.save()
             print("Game is closed for tipping")
-
-
+    # Should also send out reminders for first game of the week
 
 def run():
     # Do initial run
@@ -161,25 +160,3 @@ def run():
     # if game start time within 6 hours of now and reminder_sent is False
         # send a reminder that round is about to start
         # update reminder_sent to True
-
-# kick off checker
-    # for each game
-        # if game start time within 30 mins of now
-            # set game as 'Ongoing'
-
-# midnight update
-    # pull down the round info from foxsports
-    # for each game
-        # check fox's status compared to games status
-        # if game is completed, update scores and status
-        # for each player
-            # if team with highest score is tipped team
-                # increase player's round score by 2
-            # else if draw and player tipped
-                # increase player's round score by 1
-        # else if start time is different
-            # update start time
-    # if every game is completed
-        # set round as completed
-        # set next round as open
-        # set reminder_sent as false
