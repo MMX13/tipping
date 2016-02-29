@@ -1,18 +1,11 @@
-from django.shortcuts import render
-
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from .serializers import GameSerializer, TipSerializer, ScoreSerializer
-from .models import Game, Round, Tip, RoundScore
+from serializers import GameSerializer, TipSerializer, ScoreSerializer
+from models import Game, Round, Tip, RoundScore
 from django.http import JsonResponse
-from background.draw_helper import default_tips
+from background.helpers import default_tips, get_current_round
 import json
 # Create your views here.
-
-def get_current_round():
-    round = Round.objects.get(status="O")
-    return round.round
 
 class GamesView(ListAPIView):
     serializer_class = GameSerializer
@@ -58,7 +51,7 @@ class TipPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         print(request.user)
         if obj.user == request.user:
-            if obj.game.status=='P' and obj.game.round.status=='O':
+            if obj.game.status=='P': # and obj.game.round.status=='O':
                 return True
         return False
 

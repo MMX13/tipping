@@ -7,14 +7,13 @@ html
 .tip-row
 {
     color: white;
-    #color: #f1d007;
     font-variant: small-caps;
     font-weight: bold;
     font-size: 1.3em;
     text-shadow: 1px 1px #157a36;
     #text-shadow: 3px 3px #111111;
 
-    margin-top: 20px;
+    margin-bottom: 20px;
     background: url('../images/plate3.png') no-repeat center;
     background-size: cover;
     padding: 10px 0px 10px 0px;
