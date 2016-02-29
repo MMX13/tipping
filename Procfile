@@ -1,1 +1,1 @@
-web: gunicorn tipping.wsgi --log-file -
+web: gunicorn --pythonpath tipping tipping.wsgi --log-file -
