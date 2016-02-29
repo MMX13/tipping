@@ -1,0 +1,21 @@
+<div ng-repeat="(x, tip) in tips">
+    <div class="row text-center tip-row" ng-hide="tip.game.status!='P'">
+        <div class="row">
+            <div class="col-xs-12">
+                {{tip.game.start_time | date: "medium"}}<br/>{{tip.game.stadium}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.home_team}"
+             ng-click="updateTip(x, tip.home_team)">
+            <img ng-src="/static/images/{{tip.home_team}}.png" alt="{{tip.home_team}}"/>
+            <div ng-show="tip.team==tip.home_team"><img src="/static/images/selection.png" /></div>
+            </div>
+            <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.away_team}"
+             ng-click="updateTip(x, tip.away_team)">
+            <img ng-src="/static/images/{{tip.away_team}}.png" alt="{{tip.away_team}}"/>
+            <div ng-show="tip.team==tip.away_team"><img src="/static/images/selection.png" /></div>
+            </div>
+        </div>
+    </div>
+</div>
