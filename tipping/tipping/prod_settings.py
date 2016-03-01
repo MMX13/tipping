@@ -6,8 +6,6 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['.herokuapp.com']
 
-DEBUG=True
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
