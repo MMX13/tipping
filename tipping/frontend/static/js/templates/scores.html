@@ -1,17 +1,24 @@
-<table class='table table-responsive table-striped' style="background-color:white;">
-    <thead class='thead-default'>
+<div class="draw">
+    <div class="row">
+        <div class="col-xs-12 sub-page-title">
+            Scores
+        </div>
+    </div>
+    <table class='table table-responsive table-striped' style="background-color:white;">
+        <thead class='thead-default'>
         <tr>
             <td>Round</td>
             <td ng-repeat="round in rounds">{{ round }}</td>
             <td>Total</td>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <tr ng-repeat="(username, scores) in userscores">
             <td>{{ username }}</td>
             <td ng-repeat="score in scores">{{ score }}</td>
             <td>{{ usertotals[username] }}</td>
         </tr>
-    </tbody>
+        </tbody>
 
-</table>
+    </table>
+</div>
