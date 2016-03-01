@@ -22,16 +22,15 @@ def get_current_round():
     return round.round
 
 def round_setup():
-    for round_num in range(1, ROUNDS):
+    for round_num in range(1, ROUNDS+1):
         r = Round(round=round_num)
         r.save()
 
 def initial_rounds_sync():
-    for round in range(1, ROUNDS):
+    for round in range(1, ROUNDS+1):
         logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
-        #r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
-        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/113/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
         for game in json.loads(r.text):
             fixture_id = game["fixture_id"]
             round_object = Round.objects.get(round=round)

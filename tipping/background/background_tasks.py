@@ -16,7 +16,7 @@ def update_games():
     logger.info("1/%s: Pulling update.", numjobs)
 
     round = get_current_round()
-    r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/113/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+    r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
     games = json.loads(r.text)
     logger.info("Pull successful.")
     # draw from foxsports
