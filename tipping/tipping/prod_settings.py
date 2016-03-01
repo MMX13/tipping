@@ -71,8 +71,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tipping.wsgi.application'
 
 db_from_env = dj_database_url.config()
-DATABASES={}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
 DATABASES['default'].update(db_from_env)
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
