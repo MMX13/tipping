@@ -86,12 +86,12 @@ html
 
 .correct
 {
-    color: #88FF88;
+    color: #009933;
 }
 
 .incorrect
 {
-    color: #FF8888;
+    color: #cc0000;
 }
 
 .page-title
@@ -108,4 +108,28 @@ html
     font-variant: small-caps;
     font-size: 3em;
     font-decoration: bold;
+}
+
+.round
+{
+    font-size:1.5em;
+    font-variant: small-caps;
+    text-align: center;
+}
+
+.selector
+{
+    color: white;
+    font-size:1.3em;
+    font-variant: small-caps;
+    padding: 5px;
+    background-color: #444444;
+    border-radius:5px;
+    box-shadow: 0px 0px 3px #222222;
+}
+
+.draw-row
+{
+    padding: 0px;
+    margin: 0px;
 }
