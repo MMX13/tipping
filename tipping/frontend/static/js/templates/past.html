@@ -1,5 +1,10 @@
 <div class="draw">
     <div class="row">
+        <div class="col-xs-12 sub-page-title">
+            Past Tips
+        </div>
+    </div>
+    <div class="row">
         <div class="col-xs-12">
             <p>Round {{ round }}</p>
         </div>
@@ -49,7 +54,7 @@
         </div>
         <div class="row" ng-show="game.id==show">
             <div class="col-xs-12 text-center">
-                <p>{{ game.start_time }}</p>
+                <p>{{ game.game.start_time | date:"medium" }}</p>
                 <p>{{ game.stadium }}</p>
             </div>
         </div>

@@ -2,6 +2,7 @@ html
  {
     overflow-y: scroll;
     overflow-x: hidden;
+    font-family: Verdana;
  }
 
 .tip-row
@@ -22,13 +23,17 @@ html
 .frontpage-link
 {
     padding: 50px 10px 10px 10px;
+    font-variant: small-caps;
     font-size: 2em;
     color:white;
     text-shadow: 2px 2px #000000;
 
 
     border-radius: 10px;
-    box-shadow: 5px 5px 5px #111111;
+    border-style: solid;
+    border-color: #EEEEEE;
+    border-width: 1px;
+    box-shadow: 0px 0px 10px 2px #000000;
     margin-bottom: 10px;
 }
 
@@ -61,6 +66,10 @@ html
 .draw
 {
     background-color: white;
+    box-shadow: 0px 0px 10px #000000;
+    padding:5px;
+    margin-bottom:20px
+
 }
 
 .winner
@@ -76,4 +85,20 @@ html
 .incorrect
 {
     color: #FF8888;
+}
+
+.page-title
+{
+    font-variant: small-caps;
+    font-size: 4em;
+    font-decoration: bold;
+    text-shadow: 2px 2px #000000;
+    color: white;
+}
+
+.sub-page-title
+{
+    font-variant: small-caps;
+    font-size: 3em;
+    font-decoration: bold;
 }
