@@ -4,8 +4,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = os.environ['SECRET_KEY']
-#ALLOWED_HOSTS = ['.herokuapp.com']
 ALLOWED_HOSTS = ['*']
+
+DEBUG=True
 
 LOGGING = {
     'version': 1,

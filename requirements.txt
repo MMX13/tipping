@@ -3,3 +3,4 @@ django-registration==2.0.4
 djangorestframework==3.3.2
 requests==2.9.1
 gunicorn==19.4.5
+whitenoise==2.0.6

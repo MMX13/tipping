@@ -2,3 +2,4 @@ venv/*
 .idea/*
 tipping/tipping/staticfiles/*
 *.py[cod]
+debug.log
