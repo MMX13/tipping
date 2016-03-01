@@ -6,26 +6,22 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['.herokuapp.com']
-DEBUG=os.environ.get('DEBUG', False)
+DEBUG = os.environ.get('DEBUG', False)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
+        'console': {
+            'class': 'logging.StreamHandler',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'INFO',
-            'propagate': True,
         },
     },
 }
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -70,7 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tipping.wsgi.application'
 
-db_from_env = dj_database_url.config()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -81,8 +76,8 @@ DATABASES = {
         'PORT': '',
     }
 }
+db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
