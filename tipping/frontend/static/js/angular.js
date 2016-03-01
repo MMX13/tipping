@@ -23,6 +23,9 @@ tippingApp.config(
                 templateUrl: 'static/js/templates/scores.html',
                 controller: 'ScoreCtrl'
             }).
+            when('/help',{
+                templateUrl: 'static/js/templates/help.html'
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -178,4 +181,7 @@ tippingApp.controller("PastTipCtrl", function($scope, $http){
         });
 
 
+});
+
+tippingApp.controller('HelpCtrl', function(){
 });

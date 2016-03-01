@@ -63,6 +63,13 @@ html
     background-position: left bottom;
 }
 
+.help-link
+{
+    background: url('../images/help.png') no-repeat;
+    background-size: cover;
+    background-position: left bottom;
+}
+
 .draw
 {
     background-color: white;
