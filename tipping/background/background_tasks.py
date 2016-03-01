@@ -2,7 +2,7 @@ from helpers import get_current_round, default_tips
 import requests
 from django.contrib.auth.models import User
 from api.models import Round, Team, Game, Tip, RoundScore
-from apscheduler.schedulers.blocking import BlockingScheduler
+
 import json
 import logging
 logger = logging.getLogger('root')
@@ -141,17 +141,6 @@ def kickoff_checker():
             game.save()
             print("Game is closed for tipping")
     # Should also send out reminders for first game of the week
-
-def run():
-    # Do initial run
-    kickoff_checker()
-    #update_games()
-
-    scheduler = BlockingScheduler()
-    scheduler.add_job(kickoff_checker, 'interval', minutes=15)
-    scheduler.add_job(update_games, 'cron', hour=10)
-    scheduler.start()
-
 
 # reminder_sent = False
 
