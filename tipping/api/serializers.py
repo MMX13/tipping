@@ -1,6 +1,12 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Round, Game, Tip, RoundScore
+from .models import Round, Game, Tip, RoundScore, Team
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ('id', 'name', 'fox_id')
 
 class UserSerializer(serializers.Serializer):
     class Meta:
@@ -21,6 +27,9 @@ class ScoreSerializer(serializers.ModelSerializer):
         fields = ('user', 'username', 'round', 'score')
 
 class GameSerializer(serializers.ModelSerializer):
+    home_team = TeamSerializer(read_only=True)
+    away_team = TeamSerializer(read_only=True)
+
     class Meta:
         model = Game
         fields = ('fixture_id', 'round', 'start_time', 'home_team', 'away_team', 'home_score', 'away_score', 'stadium', 'status')
@@ -28,14 +37,6 @@ class GameSerializer(serializers.ModelSerializer):
 class TipSerializer(serializers.ModelSerializer):
     game = GameSerializer(read_only=True)
 
-    start_time = serializers.CharField(read_only=True, source='game.start_time')
-    stadium = serializers.CharField(read_only=True, source='game.stadium')
-    home_team = serializers.CharField(read_only=True, source='game.home_team')
-    away_team = serializers.CharField(read_only=True, source='game.away_team')
-    home_score = serializers.IntegerField(read_only=True, source='game.home_score')
-    away_score = serializers.IntegerField(read_only=True, source='game.away_score')
-    status = serializers.CharField(read_only=True, source='game.status')
-
     class Meta:
         model = Tip
-        fields = ('id', 'user', 'round', 'team', 'game', 'start_time', 'home_team', 'away_team', 'home_score', 'away_score', 'stadium', 'status')
+        fields = ('id', 'user', 'round', 'team', 'game')

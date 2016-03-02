@@ -24,10 +24,10 @@
             <div class="col-xs-6" ng-class="{ winner: game.home_score>=game.away_score&&game.status=='C' }">
                 <div class="row">
                     <div class="col-xs-5">
-                        <img ng-src="static/images/{{game.home_team}}.png" class="img-responsive"/>
+                        <img ng-src="static/images/{{game.home_team.name}}.png" class="img-responsive"/>
                     </div>
                     <div class="col-xs-5 text-left">
-                        <p>{{game.home_team}}</p>
+                        <p>{{game.home_team.name}}</p>
                     </div>
                     <div class="col-xs-2">
                         <p>{{game.home_score}}</p>
@@ -40,10 +40,10 @@
                         <p>{{game.away_score}}</p>
                     </div>
                     <div class="col-xs-5 text-right">
-                        <p>{{game.away_team}}</p>
+                        <p>{{game.away_team.name}}</p>
                     </div>
                     <div class="col-xs-5">
-                        <img ng-src="static/images/{{game.away_team}}.png" class="img-responsive"/>
+                        <img ng-src="static/images/{{game.away_team.name}}.png" class="img-responsive"/>
                     </div>
                 </div>
             </div>
