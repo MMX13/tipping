@@ -82,6 +82,15 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
 
 tippingApp.controller("TipCtrl", function($scope, $http){
 
+    function compare(a,b) {
+      if (a.game.start_time < b.game.start_time)
+        return -1;
+      else if (a.game.start_time > b.game.start_time)
+        return 1;
+      else
+        return 0;
+    }
+
     $scope.submitting = {}
 
     $scope.updateTip = function(i, tip_team){
@@ -101,8 +110,7 @@ tippingApp.controller("TipCtrl", function($scope, $http){
     $scope.tips = [];
     $http.get("/api/tips/").
         then(function(data) {
-            //console.log(data);
-            $scope.tips=data.data;
+            $scope.tips = data.data.sort(compare);
         });
 });
 
@@ -144,13 +152,22 @@ tippingApp.controller("DrawCtrl", function($scope, $http){
 tippingApp.controller("PastTipCtrl", function($scope, $http){
     $scope.show = -1;
 
+    function compare(a,b) {
+      if (a.game.start_time < b.game.start_time)
+        return -1;
+      else if (a.game.start_time > b.game.start_time)
+        return 1;
+      else
+        return 0;
+    }
+
     $scope.updatePastTips = function(round){
         if (round!=""){
             round="?round="+round;
         }
         $http.get("/api/tips/"+round).
             then(function(data){
-                $scope.pasttips=data.data;
+                $scope.pasttips=data.data.sort(compare);
                 $scope.round=$scope.pasttips[0].round;
             });
     }
