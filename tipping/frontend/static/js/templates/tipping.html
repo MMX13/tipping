@@ -7,16 +7,16 @@
         </div>
         <div class="row" ng-hide="submitting[tip.game.fixture_id]">
             <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.home_team}"
-                 ng-click="updateTip(x, tip.home_team)">
+                 ng-click="updateTip(x, tip.game.home_team)">
                 <img ng-src="/static/images/{{tip.home_team}}.png" alt="{{tip.home_team}}"/>
 
-                <div ng-show="tip.team==tip.home_team"><img src="/static/images/selection.png"/></div>
+                <div ng-show="tip.team==tip.game.home_team"><img src="/static/images/selection.png"/></div>
             </div>
             <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.away_team}"
-                 ng-click="updateTip(x, tip.away_team)">
+                 ng-click="updateTip(x, tip.game.away_team)">
                 <img ng-src="/static/images/{{tip.away_team}}.png" alt="{{tip.away_team}}"/>
 
-                <div ng-show="tip.team==tip.away_team"><img src="/static/images/selection.png"/></div>
+                <div ng-show="tip.team==tip.game.away_team"><img src="/static/images/selection.png"/></div>
             </div>
         </div>
         <div class="row text-center" ng-show="submitting[tip.game.fixture_id]" style="height: 152px;">

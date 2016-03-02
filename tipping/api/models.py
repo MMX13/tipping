@@ -11,7 +11,7 @@ STATUS_CHOICES = (
 
 # Create your models here.
 class Team(models.Model):
-    name = models.CharField(max_length=30, primary_key=True)
+    name = models.CharField(max_length=30, unique=True)
     fox_id = models.IntegerField(unique=True)
 
     def __unicode__(self):

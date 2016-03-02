@@ -26,11 +26,36 @@ def round_setup():
         r = Round(round=round_num)
         r.save()
 
-def initial_rounds_sync():
+def initial_comp_setup():
+    round_setup()
     for round in range(1, ROUNDS+1):
         logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
         r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+
+        if round==1:
+            teams = []
+            for game in json.loads(r.text):
+                team = {}
+                team['name']=game["team_A"]["name"]+' '+game["team_A"]["short_name"]
+                team['fox_id']=game["team_A"]["id"]
+                if team not in teams:
+                    teams.append(team)
+                    logger.info("Adding team %s to teams", team['name'])
+                    new_team=Team(name=team['name'], fox_id=team['fox_id'])
+                    new_team.save()
+
+                team = {}
+                team['name']=game["team_B"]["name"]+' '+game["team_B"]["short_name"]
+                team['fox_id']=game["team_B"]["id"]
+                if team not in teams:
+                    teams.append(team)
+                    logger.info("Adding team %s to teams", team['name'])
+                    new_team=Team(name=team['name'], fox_id=team['fox_id'])
+                    new_team.save()
+
+
+
         for game in json.loads(r.text):
             fixture_id = game["fixture_id"]
             round_object = Round.objects.get(round=round)
