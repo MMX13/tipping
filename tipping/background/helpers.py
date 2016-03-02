@@ -24,6 +24,8 @@ def get_current_round():
 def round_setup():
     for round_num in range(1, ROUNDS+1):
         r = Round(round=round_num)
+        if round_num==1:
+            r.status='O'
         r.save()
 
 def initial_comp_setup():
