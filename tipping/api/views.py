@@ -51,7 +51,7 @@ class TipPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         print(request.user)
         if obj.user == request.user:
-            if obj.game.status=='P': # and obj.game.round.status=='O':
+            if obj.game.status=='P':
                 return True
         return False
 

@@ -11,34 +11,36 @@ from django.utils import timezone
 from datetime import timedelta
 
 def update_games():
-    numjobs = 2
-    logger.info("Updating games...")
-    logger.info("1/%s: Pulling update.", numjobs)
 
-    round = get_current_round()
-    r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
-    games = json.loads(r.text)
-    logger.info("Pull successful.")
-    # draw from foxsports
+    # If it's three hours past kickoff for any ongoing games
+    if any([timezone.now()>game.start_time+timedelta(seconds=60*60*3) for game in Game.objects.filter(status='O')]):
 
-    update_required = False
+        logger.info("Updating games...")
+        logger.info("Pulling update.")
 
-    logger.info("2/%s: Updating game info.", numjobs)
-    for game in games:
-        if game["match_status"]=="Full Time":
-            stored_game = Game.objects.get(fixture_id=game["fixture_id"])
-            if stored_game.status!="C":
-                logger.info("-Game finished, %s vs. %s. Updating stored info.", game["team_A"]["name"], game["team_B"]["name"])
-                update_required =True
-                stored_game.status="C"
-                stored_game.home_score=game["team_A"]["score"]
-                stored_game.away_score=game["team_B"]["score"]
-                stored_game.save()
+        round = get_current_round()
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        games = json.loads(r.text)
+        logger.info("Pull successful.")
 
-    logger.info("Games updated successfully.")
-    if update_required:
-        update_scores()
-        update_rounds()
+        update_required = False
+
+        logger.info("Updating game info.")
+        for game in games:
+            if game["match_status"]=="Full Time":
+                stored_game = Game.objects.get(fixture_id=game["fixture_id"])
+                if stored_game.status!="C":
+                    logger.info("-Game finished, %s vs. %s. Updating stored info.", game["team_A"]["name"], game["team_B"]["name"])
+                    update_required =True
+                    stored_game.status="C"
+                    stored_game.home_score=game["team_A"]["score"]
+                    stored_game.away_score=game["team_B"]["score"]
+                    stored_game.save()
+
+        logger.info("Games updated successfully.")
+        if update_required:
+            update_scores()
+            update_rounds()
 
 
 def update_scores():
@@ -61,7 +63,8 @@ def update_scores():
 
             if tip.team is None:
                 logger.info("-User did not tip")
-                bonus_point = False
+                if not tip.game.special:
+                    bonus_point = False
 
             # Home team wins and user tipped home team
             elif tip.game.home_score>tip.game.away_score and \
@@ -81,7 +84,8 @@ def update_scores():
                 score_total += 1
                 logger.info("-Game was drawn")
             else:
-                bonus_point = False
+                if not tip.game.special:
+                    bonus_point = False
                 logger.info("-User tipped incorrectly")
 
         if bonus_point:

@@ -43,6 +43,7 @@ class Game(models.Model):
     away_score = models.IntegerField(null=True, blank=True)
     stadium = models.CharField(max_length=30)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="P")
+    special = models.BooleanField(default=False)
 
 class Tip(models.Model):
     user = models.ForeignKey(User)
