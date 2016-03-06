@@ -1,0 +1,62 @@
+<div class="draw">
+    <div class="row">
+        <div class="col-xs-12 sub-page-title">
+            Past Tips
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 round">
+            <p>Round {{ round }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6" ng-click="changeRound(-1)">
+            <p class="selector text-left">Previous Round</p>
+        </div>
+        <div class="col-xs-6" ng-click="changeRound(1)">
+            <p class="selector text-right">Next Round</p>
+        </div>
+    </div>
+
+
+    <div ng-repeat="tip in pasttips">
+        <div class="row" ng-click="showDetails(tip.id)">
+            <div class="col-xs-6" ng-class="{ winner: tip.game.home_score>=tip.game.away_score&&tip.game.status=='C',
+                                   correct: tip.game.home_score>=tip.game.away_score&&tip.team==tip.game.home_team.id&&tip.game.status=='C',
+                                   incorrect: tip.game.home_score<tip.game.away_score&&tip.team==tip.game.home_team.id&&tip.game.status=='C' }">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <img ng-src="static/images/{{tip.game.home_team.name}}.png" class="img-responsive"/>
+                    </div>
+                    <div class="col-xs-5 text-left">
+                        <p>{{tip.game.home_team.name}}</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <p>{{tip.game.home_score}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6" ng-class="{ winner: tip.game.home_score<=tip.game.away_score&&tip.game.status=='C',
+                                            correct: tip.game.home_score<=tip.game.away_score&&tip.team==tip.game.away_team.id&&tip.game.status=='C',
+                                            incorrect: tip.game.home_score>tip.game.away_score&&tip.team==tip.game.away_team.id&&tip.game.status=='C' }">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <p>{{tip.game.away_score}}</p>
+                    </div>
+                    <div class="col-xs-5 text-right">
+                        <p>{{tip.game.away_team.name}}</p>
+                    </div>
+                    <div class="col-xs-5">
+                        <img ng-src="static/images/{{tip.game.away_team.name}}.png" class="img-responsive"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="tip.id==show">
+            <div class="col-xs-12 text-center">
+                <p>{{ tip.game.game.start_time | date:"medium" }}</p>
+                <p>{{ tip.game.stadium }}</p>
+            </div>
+        </div>
+    </div>
+</div>
