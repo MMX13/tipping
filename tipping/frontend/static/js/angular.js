@@ -38,6 +38,7 @@ tippingApp.controller("BaseCtrl", function($scope, $location){
 });
 
 tippingApp.controller("ScoreCtrl", function($scope, $http){
+
     $scope.getScores = function(){
         $http.get("/api/scores/").
             then(function(data){
@@ -46,7 +47,7 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
                 users=[];
                 rounds=[];
                 userscores = {};
-                usertotals={};
+                usertotals=[];
 
                 scores.forEach(function(s){
                     if (users.indexOf(s.username)==-1){
@@ -63,14 +64,19 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
                 console.log(userscores)
 
                 users.forEach(function(u){
+                    total = 0
                     for(x=1;x<=rounds.length;x++){
-                        usertotals[u]+=userscores[u][x];
+                        total+=userscores[u][x];
                     }
+                    usertotal = {'user':u, 'total':6};
+                    usertotals.push(usertotal)
                 });
 
                 $scope.usertotals = usertotals
                 $scope.userscores = userscores
                 $scope.rounds = rounds
+
+
 
 
             });

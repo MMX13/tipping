@@ -13,12 +13,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="(username, scores) in userscores">
-            <td>{{ username }}</td>
-            <td ng-repeat="score in scores">{{ score }}</td>
-            <td>{{ usertotals[username] }}</td>
+        <tr ng-repeat="row in usertotals | orderBy: total: true">
+            <td>{{row.user}}</td>
+            <td ng-repeat="score in userscores[row.user]">{{score}}</td>
+            <td>{{row.total}}</td>
         </tr>
+
         </tbody>
 
     </table>
+
 </div>
