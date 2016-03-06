@@ -59,6 +59,7 @@ def update_scores():
         for tip in Tip.objects.filter(user=user, round=round):
             if tip.game.status!="C":
                 bonus_point = False # Can't award bonus point if not all games are played
+                continue
 
             if tip.team is None:
                 logger.info("-User did not tip")
