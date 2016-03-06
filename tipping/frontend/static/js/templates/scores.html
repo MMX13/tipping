@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="row in usertotals | orderBy: total: true">
+        <tr ng-repeat="row in usertotals | orderBy:'total':true">
             <td>{{row.user}}</td>
             <td ng-repeat="score in userscores[row.user]">{{score}}</td>
             <td>{{row.total}}</td>
