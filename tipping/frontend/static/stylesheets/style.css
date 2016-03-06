@@ -74,9 +74,15 @@ html
 {
     background-color: white;
     box-shadow: 0px 0px 10px #000000;
-    padding:5px;
-    margin-bottom:20px
+    margin-bottom:20px;
+    padding: 5px;
+}
 
+.pasttip
+{
+    background-color: white;
+    box-shadow: 0px 0px 10px #000000;
+    margin-bottom:20px;
 }
 
 .winner
@@ -87,11 +93,13 @@ html
 .correct
 {
     color: #009933;
+    background-color: #c0f2d0;
 }
 
 .incorrect
 {
     color: #CC0000;
+    background-color: #e99696;
 }
 
 .page-title
@@ -120,11 +128,13 @@ html
 .selector
 {
     color: white;
-    font-size:1.3em;
+    font-size:1.4em;
     font-variant: small-caps;
-    padding: 5px;
-    background-color: #444444;
-    border-radius:5px;
+    padding-top: 5px;
+    background-color: #555555;
+    border-color: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
     box-shadow: 0px 0px 3px #222222;
 }
 
@@ -132,4 +142,15 @@ html
 {
     padding: 0px;
     margin: 0px;
+}
+
+.score
+{
+    text-align: center;
+    font-size: 3em;
+}
+
+.tip
+{
+    padding-top: 10px;
 }

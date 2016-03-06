@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from serializers import GameSerializer, TipSerializer, ScoreSerializer
+from serializers import GameSerializer, TipSerializer, TipUpdateSerializer, ScoreSerializer
 from models import Game, Round, Tip, RoundScore
 from django.http import JsonResponse
 from background.helpers import default_tips, get_current_round
@@ -55,9 +55,8 @@ class TipPermission(BasePermission):
                 return True
         return False
 
-
 class UpdateTipView(RetrieveUpdateAPIView):
-    serializer_class = TipSerializer
+    serializer_class = TipUpdateSerializer
     permission_classes = (IsAuthenticated, TipPermission)
     queryset = Tip.objects.all()
 

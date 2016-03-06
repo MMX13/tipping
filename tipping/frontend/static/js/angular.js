@@ -95,10 +95,11 @@ tippingApp.controller("TipCtrl", function($scope, $http){
 
     $scope.updateTip = function(i, tip_team){
         tip = $scope.tips[i];
+
         if (tip.team != tip_team) {
             // Send the update
             $scope.submitting[tip.game.fixture_id] = true;
-            $http.patch("/api/tip/" + tip.id + "/", {'team': tip_team}).
+            $http.patch("/api/tip/" + tip.id + "/", {'team': tip_team.id}).
                 then(function () {
                     // Update the scope
                     $scope.tips[i].team = tip_team;

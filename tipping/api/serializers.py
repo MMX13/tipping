@@ -36,7 +36,15 @@ class GameSerializer(serializers.ModelSerializer):
 
 class TipSerializer(serializers.ModelSerializer):
     game = GameSerializer(read_only=True)
+    team = TeamSerializer(read_only=True)
 
     class Meta:
         model = Tip
         fields = ('id', 'user', 'round', 'team', 'game')
+
+class TipUpdateSerializer(serializers.ModelSerializer):
+    game = GameSerializer(read_only=True)
+
+    class Meta:
+        model = Tip
+        fields = ('user', 'team', 'game')
