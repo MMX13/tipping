@@ -68,7 +68,7 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
                     for(x=1;x<=rounds.length;x++){
                         total+=userscores[u][x];
                     }
-                    usertotal = {'user':u, 'total':6};
+                    usertotal = {'user':u, 'total':total};
                     usertotals.push(usertotal)
                 });
 
