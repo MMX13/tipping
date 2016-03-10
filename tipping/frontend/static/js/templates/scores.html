@@ -8,7 +8,7 @@
         <thead class='thead-default'>
         <tr>
             <td>Round</td>
-            <td ng-repeat="round in rounds">{{ round }}</td>
+            <td ng-repeat="round in rounds | orderBy: 'round'">{{ round }}</td>
             <td>Total</td>
         </tr>
         </thead>
