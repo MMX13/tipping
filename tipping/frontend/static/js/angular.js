@@ -69,6 +69,7 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
                 rounds=[];
                 userscores = {};
                 usertotals=[];
+                $scope.rounds=[];
 
                 scores.forEach(function(s){
                     if (users.indexOf(s.username)==-1){
@@ -78,6 +79,7 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
                     }
                     if (rounds.indexOf(s.round)==-1){
                         rounds.push(s.round);
+                        $scope.rounds.push({'round':s.round});
                     }
                     userscores[s.username][s.round]=s.score;
 
@@ -95,7 +97,6 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
 
                 $scope.usertotals = usertotals
                 $scope.userscores = userscores
-                $scope.rounds = rounds
 
 
 
