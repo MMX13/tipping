@@ -44,6 +44,10 @@ tippingApp.config(
                 templateUrl: 'static/js/templates/scores.html',
                 controller: 'ScoreCtrl'
             }).
+            when('/ladder',{
+                templateUrl: 'static/js/templates/ladder.html',
+                controller: 'LadderCtrl'
+            }).
             when('/help',{
                 templateUrl: 'static/js/templates/help.html'
             }).
@@ -219,6 +223,14 @@ tippingApp.controller("PastTipCtrl", function($scope, $http){
         });
 
 
+});
+
+tippingApp.controller('LadderCtrl', function($scope, $http){
+
+    $http.get("/api/ladder").
+        then(function(data){
+            $scope.ladder=data.data;
+        });
 });
 
 tippingApp.controller('HelpCtrl', function(){

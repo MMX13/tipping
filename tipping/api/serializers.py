@@ -8,6 +8,11 @@ class TeamSerializer(serializers.ModelSerializer):
         model = Team
         fields = ('id', 'name', 'fox_id')
 
+class LadderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ('position', 'name', 'points', 'difference')
+
 class UserSerializer(serializers.Serializer):
     class Meta:
         model = User

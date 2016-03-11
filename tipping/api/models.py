@@ -13,6 +13,9 @@ STATUS_CHOICES = (
 class Team(models.Model):
     name = models.CharField(max_length=30, unique=True)
     fox_id = models.IntegerField(unique=True)
+    position = models.IntegerField(null=True, blank=True)
+    points = models.IntegerField(default=0)
+    difference = models.IntegerField(default=0)
 
     def __unicode__(self):
        return self.name

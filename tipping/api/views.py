@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from serializers import GameSerializer, TipSerializer, TipUpdateSerializer, ScoreSerializer
-from models import Game, Round, Tip, RoundScore
+from serializers import GameSerializer, TipSerializer, TipUpdateSerializer, ScoreSerializer, LadderSerializer
+from models import Game, Round, Tip, RoundScore, Team
 from django.http import JsonResponse
 from background.helpers import default_tips, get_current_round
 import json
@@ -68,6 +68,11 @@ class RetrieveScoresView(ListAPIView):
         scores = RoundScore.objects.all()
         scores = [score for score in scores if score.round.round<=get_current_round()]
         return scores
+
+class RetrieveLadderView(ListAPIView):
+    serializer_class = LadderSerializer
+    queryset = Team.objects.all()
+
 
 def CurrentRoundView(request):
     return JsonResponse({'round': get_current_round()})

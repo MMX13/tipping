@@ -40,6 +40,7 @@ def update_games():
         logger.info("Games updated successfully.")
         if update_required:
             update_scores()
+            update_ladder()
             update_rounds()
 
 
@@ -131,6 +132,15 @@ def update_rounds():
     else:
         logger.info("Round is not complete.")
 
+def update_ladder():
+    r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/ladder.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+
+    for team in json.loads(r.text)['teams']:
+        t = Team.objects.get(fox_id=team['id'])
+        t.position = team['stats']['position']
+        t.points = team['stats']['points']
+        t.difference = team['stats']['difference']
+        t.save()
 
 def kickoff_checker():
     logger.info("Checking for kickoffs.")

@@ -46,8 +46,8 @@ html
 .tips-link
 {
     background: url('../images/fieldnight.jpg') no-repeat;
-    background-size: cover;
     background-position: left;
+    background-size: cover;
 }
 
 .past-tips-link
@@ -59,15 +59,21 @@ html
 .draw-link
 {
     background: url('../images/ball.jpg') no-repeat;
-    background-size: cover;
     background-position: left bottom;
+    background-size: cover;
 }
 
 .help-link
 {
     background: url('../images/help.png') no-repeat;
-    background-size: cover;
     background-position: left bottom;
+    background-size: cover;
+}
+
+.ladder-link
+{
+    background: url('../images/trophy.jpg') no-repeat;
+    background-size: cover;
 }
 
 .scores

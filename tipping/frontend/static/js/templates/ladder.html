@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-xs-12 draw">
+        <div class="row">
+            <div class="col-xs-12 sub-page-title">
+                Ladder
+                <hr/>
+            </div>
+            <table class='table table-responsive table-striped'>
+                <thead class='thead-default' style="font-size: 1.3em; font-weight: bold;">
+                <td>
+                    #
+                </td>
+                <td>
+                    Team
+                </td>
+                <td>
+                    Points
+                </td>
+                <td>
+                    Diff
+                </td>
+                </thead>
+                <tr ng-repeat="rung in ladder | orderBy: 'position'" >
+                    <td>{{rung.position}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img ng-src="/static/images/{{rung.name}}.png" class="img-responsive"/>
+                            </div>
+                            <div class="col-xs-8">
+                                {{rung.name}}
+                            </div>
+                        </div>
+
+                    </td>
+                    <td class="text-center">{{rung.points}}</td>
+                    <td class="text-center">{{rung.difference}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
