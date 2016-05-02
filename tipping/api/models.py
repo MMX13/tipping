@@ -56,3 +56,6 @@ class Tip(models.Model):
     round = models.ForeignKey(Round)
     game = models.ForeignKey(Game)
     team = models.ForeignKey(Team, null=True, blank=True)
+
+    def __unicode__(self):
+        return str(self.user)+": "+ str(self.game)
