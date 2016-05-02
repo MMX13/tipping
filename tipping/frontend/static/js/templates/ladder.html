@@ -20,7 +20,7 @@
                     Diff
                 </td>
                 </thead>
-                <tr ng-repeat="rung in ladder | orderBy: 'position'" >
+                <tr ng-repeat="rung in ladder | orderBy: 'position'" ng-show="rung.position">
                     <td>{{rung.position}}</td>
                     <td>
                         <div class="row">

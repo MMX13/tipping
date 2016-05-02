@@ -48,6 +48,9 @@ class Game(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="P")
     special = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        return str(self.home_team)+" vs. "+str(self.away_team)
+
 class Tip(models.Model):
     user = models.ForeignKey(User)
     round = models.ForeignKey(Round)
