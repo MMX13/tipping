@@ -10,6 +10,12 @@ logging.basicConfig(level=logging.INFO)
 from django.utils import timezone
 from datetime import timedelta
 
+
+def update_all():
+    update_scores()
+    update_ladder()
+    update_rounds()
+
 def update_games():
 
     # If it's three hours past kickoff for any ongoing games
@@ -39,9 +45,7 @@ def update_games():
 
         logger.info("Games updated successfully.")
         if update_required:
-            update_scores()
-            update_ladder()
-            update_rounds()
+            update_all()
 
 
 def update_scores():
