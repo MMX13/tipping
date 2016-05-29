@@ -8,14 +8,14 @@
         <thead class='thead-default'>
         <tr>
             <td>Round</td>
-            <td ng-repeat="round in rounds | orderBy: 'round'">{{ round.round }}</td>
+            <td ng-repeat="round in rounds | orderBy: 'round'" ng-hide="round.round < (max_round-4)">{{ round.round }}</td>
             <td>Total</td>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="row in usertotals | orderBy:'total':true">
+        <tr ng-repeat="row in usertotals | orderBy:'total':true" >
             <td>{{row.user}}</td>
-            <td ng-repeat="score in userscores[row.user]">{{score}}</td>
+            <td ng-repeat="(round, score) in userscores[row.user]" ng-hide="round < (max_round-4)">{{score}}</td>
             <td>{{row.total}}</td>
         </tr>
 

@@ -64,6 +64,8 @@ tippingApp.controller("BaseCtrl", function($scope, $location){
 
 tippingApp.controller("ScoreCtrl", function($scope, $http){
 
+    $scope.max_round = 0;
+
     $scope.getScores = function(){
         $http.get("/api/scores/").
             then(function(data){
@@ -84,6 +86,12 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
                     if (rounds.indexOf(s.round)==-1){
                         rounds.push(s.round);
                         $scope.rounds.push({'round':s.round});
+
+                        //Refactor this out
+                        if (s.round>$scope.max_round){
+                            $scope.max_round=s.round;
+                        }
+
                     }
                     userscores[s.username][s.round]=s.score;
 
@@ -101,9 +109,6 @@ tippingApp.controller("ScoreCtrl", function($scope, $http){
 
                 $scope.usertotals = usertotals
                 $scope.userscores = userscores
-
-
-
 
             });
 
