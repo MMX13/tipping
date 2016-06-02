@@ -46,6 +46,8 @@ def update_games():
         logger.info("Games updated successfully.")
         if update_required:
             update_all()
+    elif all([game.status=="C" for game in Game.objects.filter(round=get_current_round())]):
+        update_all()
 
 
 def update_scores():
