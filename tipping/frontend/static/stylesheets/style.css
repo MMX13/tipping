@@ -167,3 +167,9 @@ html
 {
     padding-top: 10px;
 }
+
+.thead-scores{
+    background-color: #157A36;
+    color: white;
+    font-weight: bold;
+}

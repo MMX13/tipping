@@ -5,7 +5,7 @@
         </div>
     </div>
     <table class='table table-responsive table-striped' style="background-color:white;">
-        <thead class='thead-default'>
+        <thead class='thead-default thead-scores'>
         <tr>
             <td>Round</td>
             <td ng-repeat="round in rounds | orderBy: 'round'" ng-hide="round.round < (max_round-4)">{{ round.round }}</td>
@@ -16,11 +16,8 @@
         <tr ng-repeat="row in usertotals | orderBy:'total':true" >
             <td>{{row.user}}</td>
             <td ng-repeat="(round, score) in userscores[row.user]" ng-hide="round < (max_round-4)">{{score}}</td>
-            <td>{{row.total}}</td>
+            <td><b>{{row.total}}</b></td>
         </tr>
-
         </tbody>
-
     </table>
-
 </div>
