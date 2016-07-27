@@ -76,3 +76,26 @@ def initial_comp_setup():
         elapsed_time = end-start
         if elapsed_time.total_seconds()<5:
             time.sleep(5 - elapsed_time.total_seconds())
+
+
+def comp_sync():
+    for round in range(get_current_round(), ROUNDS+1):
+        logger.info("Fetching round %s/%s...", round, ROUNDS)
+        start = datetime.now()
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        logger.info("%s", r.text)
+        for game in json.loads(r.text):
+            logger.info("%s", game["fixture_id"])
+            stored_game = Game.objects.get(fixture_id=game["fixture_id"])
+            logger.info("Syncing game %s vs. %s", str(stored_game.home_team), str(stored_game.away_team))
+            if stored_game.start_time != parse_datetime(game["match_start_date"]):
+                logger.info("Start time has changed... updating")
+                stored_game.start_time = parse_datetime(game["match_start_date"])
+            if stored_game.stadium != game["venue"]["name"]:
+                logger.info("Venue has changed... updating")
+                stored_game.stadium = game["venue"]["name"]
+            stored_game.save()
+        end = datetime.now()
+        elapsed_time = end-start
+        if elapsed_time.total_seconds()<5:
+            time.sleep(5 - elapsed_time.total_seconds())
