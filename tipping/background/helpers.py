@@ -33,7 +33,7 @@ def initial_comp_setup():
     for round in range(1, ROUNDS+1):
         logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
-        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/115/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
 
         if round==1:
             teams = []
