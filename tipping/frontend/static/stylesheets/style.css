@@ -3,7 +3,31 @@ html
     overflow-y: scroll;
     overflow-x: hidden;
     font-family: Verdana;
+    padding: 5px;
+    height: 100%;
  }
+
+body
+{
+    min-height: 100%;
+    border: double white;
+    padding: 10px;
+    background: linear-gradient(to right, rgb(15,49,104), rgb(255,255,255), rgb(15,49,104));
+}
+
+.ng-view
+{
+    margin-top: -10px;
+}
+
+.main-menu
+{
+    height: 100vh;
+    background: url('/static/images/posts.jpg') center;
+    background-size: cover;
+    padding: 0% 10% 0% 10%;
+    overflow: overlay;
+}
 
 .tip-row
 {
@@ -18,6 +42,24 @@ html
     background: url('../images/plate3.png') no-repeat center;
     background-size: cover;
     padding: 10px 0px 10px 0px;
+}
+
+.tip-row-v2
+{
+    padding: 10px 0px 10px 0px;
+
+    color: white;
+    font-variant: small-caps;
+    font-size: 1.3em;
+
+    margin-bottom: 20px;
+
+    border-color: #0f3168;
+    border-style: solid none;
+    margin-bottom: 20px;
+
+    background-color: rgba(7,24,52,0.8);
+
 }
 
 .frontpage-link
@@ -37,10 +79,20 @@ html
     margin-bottom: 10px;
 }
 
-.scoreboard-link
+.frontpage-link-v2
 {
-    background: url('../images/chalkboard.jpg') no-repeat;
-    background-size: cover;
+    padding: 20px 0px 20px 0px;
+    font-variant: small-caps;
+    font-weight: bold;
+    font-size: 2em;
+    color: #0f3168;
+    text-align: center;
+
+    border-color: #0f3168;
+    border-style: solid none;
+    margin-bottom: 20px;
+
+    background: linear-gradient(to right, rgba(15,49,104,0.2), rgba(255,255,255,0.7), rgba(15,49,104,0.2));
 }
 
 .tips-link
@@ -56,16 +108,15 @@ html
     background-size: cover;
 }
 
-.draw-link
+.scoreboard-link
 {
-    background: url('../images/ball.jpg') no-repeat;
-    background-position: left bottom;
+    background: url('../images/chalkboard.jpg') no-repeat;
     background-size: cover;
 }
 
-.help-link
+.draw-link
 {
-    background: url('../images/help.png') no-repeat;
+    background: url('../images/ball.jpg') no-repeat;
     background-position: left bottom;
     background-size: cover;
 }
@@ -76,12 +127,11 @@ html
     background-size: cover;
 }
 
-.scores
+.help-link
 {
-    background-color: white;
-    box-shadow: 0px 0px 10px #000000;
-    margin-bottom:20px;
-    padding: 5px;
+    background: url('../images/help.png') no-repeat;
+    background-position: left bottom;
+    background-size: cover;
 }
 
 .draw
@@ -92,6 +142,13 @@ html
 }
 
 .pasttip
+{
+    background-color: white;
+    box-shadow: 0px 0px 10px #000000;
+    margin-bottom:20px;
+}
+
+.scores
 {
     background-color: white;
     box-shadow: 0px 0px 10px #000000;
@@ -169,7 +226,7 @@ html
 }
 
 .thead-scores{
-    background-color: #157A36;
+    background-color: #212A37;
     color: white;
     font-weight: bold;
 }

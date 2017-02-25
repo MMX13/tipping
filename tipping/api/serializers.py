@@ -6,7 +6,7 @@ from .models import Round, Game, Tip, RoundScore, Team
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ('id', 'name', 'fox_id')
+        fields = ('id', 'name', 'fox_id', 'colour')
 
 class LadderSerializer(serializers.ModelSerializer):
     class Meta:

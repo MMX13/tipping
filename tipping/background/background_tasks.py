@@ -139,7 +139,7 @@ def update_rounds():
         logger.info("Round is not complete.")
 
 def update_ladder():
-    r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/114/ladder.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+    r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/115/ladder.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
 
     for team in json.loads(r.text)['teams']:
         t = Team.objects.get(fox_id=team['id'])
