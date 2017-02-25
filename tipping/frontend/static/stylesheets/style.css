@@ -81,16 +81,16 @@ body
 
 .frontpage-link-v2
 {
-    padding: 20px 0px 20px 0px;
+    padding: 10px 0px 10px 0px;
     font-variant: small-caps;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.6em;
     color: #0f3168;
     text-align: center;
 
     border-color: #0f3168;
     border-style: solid none;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     background: linear-gradient(to right, rgba(15,49,104,0.2), rgba(255,255,255,0.7), rgba(15,49,104,0.2));
 }
