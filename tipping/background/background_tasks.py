@@ -63,37 +63,42 @@ def update_scores():
         logger.info("Updating scores for user %s, %s/%s", user.username, i+1, numjobs)
 
         score_total = 0
-        for tip in Tip.objects.filter(user=user, round=round):
-            if tip.game.status!="C":
-                bonus_point = False # Can't award bonus point if not all games are played
-                continue
 
-            if tip.team is None:
-                logger.info("-User did not tip")
-                if not tip.game.special:
-                    bonus_point = False
+        tips = Tip.objects.filter(user=user, round=round)
+        if tips:
+            for tip in tips:
+                if tip.game.status!="C":
+                    bonus_point = False # Can't award bonus point if not all games are played
+                    continue
 
-            # Home team wins and user tipped home team
-            elif tip.game.home_score>tip.game.away_score and \
-                            tip.team == tip.game.home_team:
-                score_total += 2
-                logger.info("-User tipped correctly")
+                if tip.team is None:
+                    logger.info("-User did not tip")
+                    if not tip.game.special:
+                        bonus_point = False
 
-            # Away team wins and user tipped away team
-            elif tip.game.away_score>tip.game.home_score and \
-                            tip.team == tip.game.away_team:
-                score_total += 2
-                logger.info("-User tipped correctly")
+                # Home team wins and user tipped home team
+                elif tip.game.home_score>tip.game.away_score and \
+                                tip.team == tip.game.home_team:
+                    score_total += 2
+                    logger.info("-User tipped correctly")
 
-            # Draw (non tippers aren't awarded points)
-            elif tip.game.home_score == tip.game.away_score and \
-                            tip.team != None:
-                score_total += 1
-                logger.info("-Game was drawn")
-            else:
-                if not tip.game.special:
-                    bonus_point = False
-                logger.info("-User tipped incorrectly")
+                # Away team wins and user tipped away team
+                elif tip.game.away_score>tip.game.home_score and \
+                                tip.team == tip.game.away_team:
+                    score_total += 2
+                    logger.info("-User tipped correctly")
+
+                # Draw (non tippers aren't awarded points)
+                elif tip.game.home_score == tip.game.away_score and \
+                                tip.team != None:
+                    score_total += 1
+                    logger.info("-Game was drawn")
+                else:
+                    if not tip.game.special:
+                        bonus_point = False
+                    logger.info("-User tipped incorrectly")
+        else:
+            bonus_point = False
 
         if bonus_point:
             logger.info("-User was awarded bonus point")
