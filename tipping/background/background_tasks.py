@@ -50,10 +50,11 @@ def update_games():
         update_all()
 
 
-def update_scores():
+def update_scores(round=None):
     logger.info("Updating scores...")
 
-    round=get_current_round()
+    if round is None:
+        round=get_current_round()
 
     users = User.objects.all()
     numjobs = len(users)
