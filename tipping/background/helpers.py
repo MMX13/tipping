@@ -33,7 +33,7 @@ def initial_comp_setup():
     for round in range(1, ROUNDS+1):
         logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
-        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/115/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/116/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
 
         if round==1:
             teams = []
@@ -82,7 +82,7 @@ def comp_sync():
     for round in range(get_current_round(), ROUNDS+1):
         logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
-        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/115/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/116/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
         logger.info("%s", r.text)
         for game in json.loads(r.text):
             logger.info("%s", game["fixture_id"])
