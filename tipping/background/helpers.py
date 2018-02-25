@@ -36,13 +36,15 @@ def initial_comp_setup():
         r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/116/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
 
         if round==1:
-            teams = []
+            # Setup teams if they don't already exist
+            team_ids = Team.objects.values_list('fox_id', flat=True)
+
             for game in json.loads(r.text):
                 team = {}
                 team['name']=game["team_A"]["name"]+' '+game["team_A"]["short_name"]
                 team['fox_id']=game["team_A"]["id"]
-                if team not in teams:
-                    teams.append(team)
+                if team['fox_id'] not in team_ids:
+                    team_ids.append(team['fox_id'])
                     logger.info("Adding team %s to teams", team['name'])
                     new_team=Team(name=team['name'], fox_id=team['fox_id'])
                     new_team.save()
@@ -50,8 +52,8 @@ def initial_comp_setup():
                 team = {}
                 team['name']=game["team_B"]["name"]+' '+game["team_B"]["short_name"]
                 team['fox_id']=game["team_B"]["id"]
-                if team not in teams:
-                    teams.append(team)
+                if team['fox_id'] not in team_ids:
+                    team_ids.append(team['fox_id'])
                     logger.info("Adding team %s to teams", team['name'])
                     new_team=Team(name=team['name'], fox_id=team['fox_id'])
                     new_team.save()
