@@ -9,7 +9,22 @@ STATUS_CHOICES = (
     ('C', 'Completed')
 )
 
-# Create your models here.
+class Phone(models.Model):
+    user = models.ForeignKey(User)
+    number = models.CharField(unique=True, max_length=12) 
+    
+    def save(self, *args, **kwargs):
+        self.number = self.number.replace(" ", "")
+        if self.number[0]=="0":
+            self.number = "+61"+self.number[1:]
+        elif self.number[0]!="+":
+            self.number = "+"+self.number
+        if (self.number.startswith("+61") is False
+                or len(self.number) != 12):
+            raise ValueError
+        super(Phone, self).save(*args, **kwargs)
+        
+
 class Team(models.Model):
     name = models.CharField(max_length=30, unique=True)
     fox_id = models.IntegerField(unique=True)
