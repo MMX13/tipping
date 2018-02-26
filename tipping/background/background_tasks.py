@@ -9,6 +9,7 @@ logger = logging.getLogger('root')
 logging.basicConfig(level=logging.INFO)
 from django.utils import timezone
 from datetime import timedelta
+from time import sleep
 
 
 def update_all():
@@ -154,19 +155,25 @@ def update_ladder():
         t.difference = team['stats']['difference']
         t.save()
 
+# Should also send out reminders for first game of the week
 def kickoff_checker():
-    logger.info("Checking for kickoffs.")
+    logger.info("Checking for kickoffs")
 
-    games = Game.objects.filter(round=get_current_round(), status='P')
-    for game in games:
-        print("Current time: "+str(timezone.now()))
-        print("Start time: "+str(game.start_time))
-        print("Game starts in "+str(game.start_time-timezone.now()))
-        if game.start_time<(timezone.now()+timedelta(seconds=60*30)):
-            game.status='O'
-            game.save()
-            print("Game is closed for tipping")
-    # Should also send out reminders for first game of the week
+    game = Game.objects.filter(round=get_current_round(), status='P').earliest('start_time')
+    countdown = (game.start_time - timezone.now()).seconds
+    print("Current time: "+str(timezone.now()))
+    print("Start time: "+str(game.start_time))
+    print("Game starts in "+str(game.start_time-timezone.now()))
+    if countdown < 60:
+        sleep(countdown)
+        game.status='O'
+        game.save()
+        print("Game is closed for tipping")
+        kickoff_checker()
+    elif countdown < 60*10:
+        print("Pausing for kickoff...")
+        sleep(countdown-30)
+        kickoff_checker()
 
 # reminder_sent = False
 
