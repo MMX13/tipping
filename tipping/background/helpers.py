@@ -9,7 +9,7 @@ from api.models import Round, Team, Game, Tip, RoundScore
 import logging
 logger = logging.getLogger('root')
 
-ROUNDS = 26
+ROUNDS = 25
 
 def default_tips(round, user):
     games = Game.objects.filter(round=round)
