@@ -3,4 +3,5 @@ venv/*
 tipping/tipping/staticfiles/*
 *.py[cod]
 debug.log
-db.sqlite3
+tipping/db.sqlite3
+.swp

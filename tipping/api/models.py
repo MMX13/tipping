@@ -42,6 +42,7 @@ class Team(models.Model):
 class Round(models.Model):
     round = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="P")
+    reminders_sent = models.BooleanField(default=False)
 
     def __unicode__(self):
        return str(self.round)

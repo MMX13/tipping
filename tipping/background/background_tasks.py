@@ -1,8 +1,9 @@
 from helpers import get_current_round, default_tips
 import requests
 from django.contrib.auth.models import User
-from api.models import Round, Team, Game, Tip, RoundScore
-
+from django.conf import settings
+from api.models import Round, Team, Game, Tip, RoundScore, Phone
+import boto3
 import json
 import logging
 logger = logging.getLogger('root')
@@ -175,10 +176,34 @@ def kickoff_checker():
         sleep(countdown-30)
         kickoff_checker()
 
-# reminder_sent = False
+def send_reminders():
+    cur_round = Round.objects.get(round=get_current_round())
+    if cur_round.reminders_sent:
+        return
+    game = Game.objects.filter(round=cur_round.round).earliest('start_time')
+    if (game.start_time - timezone.now()).days == 0:
+        if 9 < timezone.localtime(timezone.now()).hour < 22:
+            for phone in Phone.objects.all():
+                send_reminder(phone.number, game)
+            cur_round.reminders_sent = True
+            cur_round.save()
+        
+def send_reminder(phone_number, game):
+    client = boto3.client('sns',
+                          aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                          aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                          region_name="ap-southeast-2")
+    local_start_time = timezone.localtime(game.start_time)
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    message = "Reminder: Next game is {} {}, " \
+              "between {} and {}. Good luck!".format(
+                      weekdays[local_start_time.weekday()],
+                      local_start_time.strftime("%-I:%M %p"),
+                      game.home_team.name,
+                      game.away_team.name)
+    message_attributes = {'AWS.SNS.SMS.SenderID':
+                            {'DataType': 'String',
+                             'StringValue': 'Tipping'}
+                         }
 
-# reminder checker, runs every hour
-    # find earliest game in the round
-    # if game start time within 6 hours of now and reminder_sent is False
-        # send a reminder that round is about to start
-        # update reminder_sent to True
+    client.publish(PhoneNumber=phone_number, Message=message, MessageAttributes=message_attributes)

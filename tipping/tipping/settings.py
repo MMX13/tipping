@@ -7,6 +7,9 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = '@d$#n63c=+ew+6)eqay5v920^dp2n-ac-4jk0c4p99xp1@@^yq'
 
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
 ALLOWED_HOSTS = []
 
 LOGGING = {
@@ -88,7 +91,7 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = []
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Australia/Brisbane'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
