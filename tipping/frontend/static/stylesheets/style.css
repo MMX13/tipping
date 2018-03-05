@@ -3,16 +3,13 @@ html
     overflow-y: scroll;
     overflow-x: hidden;
     font-family: Verdana;
-    padding: 5px;
     height: 100%;
  }
 
 body
 {
     min-height: 100%;
-    border: double white;
-    padding: 10px;
-    background: linear-gradient(to right, rgb(15,49,104), rgb(255,255,255), rgb(15,49,104));
+    background-color: #22905F;
 }
 
 .ng-view
@@ -31,35 +28,24 @@ body
 
 .tip-row
 {
-    color: white;
-    font-variant: small-caps;
-    font-weight: bold;
-    font-size: 1.3em;
-    text-shadow: 1px 1px #157a36;
-    #text-shadow: 3px 3px #111111;
-
-    margin-bottom: 20px;
-    background: url('../images/plate3.png') no-repeat center;
-    background-size: cover;
     padding: 10px 0px 10px 0px;
-}
-
-.tip-row-v2
-{
-    padding: 10px 0px 10px 0px;
+    margin-right: -15px;
+    margin-left: -15px;
+    overflow-x: hidden;
 
     color: white;
     font-variant: small-caps;
     font-size: 1.3em;
 
-    margin-bottom: 20px;
-
-    border-color: #0f3168;
-    border-style: solid none;
     margin-bottom: 20px;
 
     background-color: rgba(7,24,52,0.8);
 
+}
+
+.not-selected
+{
+    filter: grayscale(100%) brightness(60%);
 }
 
 .frontpage-link
@@ -229,4 +215,202 @@ body
     background-color: #212A37;
     color: white;
     font-weight: bold;
+}
+
+.title-bar
+{
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
+    text-align: center;
+    background-color:#063455;
+    color: white;
+    font-size: 16pt;
+    font-variant: small-caps;
+}
+
+.subnav
+{
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    font-size: 12pt;
+    #position: sticky;
+    #top: 0;
+    z-index: 100;
+    margin-bottom: 20px;
+}
+
+.subnav a
+{
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    background-color: white;
+    color: inherit;
+}
+.subnav a:active
+{
+    background-color: #265E86;
+    color: white;
+}
+
+.subnav a:hover
+{
+    text-decoration: none;
+}
+
+.subnav a span
+{
+    width: 100%;
+    text-align: center;
+}
+
+.subnav .bordered
+{
+    padding-top: 6px;
+    border-bottom: 6px solid #063455;
+}
+
+.subnav .dropdown-menu
+{
+    width: 30%;
+}
+
+.subnav .dropdown-menu li a
+{
+    padding: 10px;
+    text-align: center;
+}
+
+.welcome
+{
+    font-size: 12pt;
+    font-weight: 700;
+    color: white;
+    padding: 10px 0px 10px 0px;
+}
+
+.index-panel
+{
+    background-color: white;
+    padding: 70px 20px 30px 20px;
+    margin-top: 10px;
+    font-size: 12pt;
+    white-space: nowrap;
+    position: relative;
+}
+
+.index-panel h3
+{
+    padding-left: 20px;
+    margin: 0;
+    font-size: 16pt;
+    height: 60px;
+    line-height: 60px;
+    background-color: #EEEEEE;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+}
+
+.next-game
+{
+    padding: 20px 0px 20px 0px;
+    width: 50%;
+    height: 250px;
+    font-weight: 700;
+    vertical-align: top;
+    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-around;
+    white-space: normal;
+}
+
+.next-game p
+{
+    color: #AAAAAA;
+    font-weight: 400;
+}
+
+.tip-status
+{
+    font-size: 16pt;
+}
+
+.success
+{
+    color: green;
+}
+
+.fail
+{
+    color: red;
+}
+
+
+.versus
+{
+    width: 50%;
+    height: 250px;
+    display: inline-block;
+    position: relative;
+    background-color: #063455;
+    border-radius: 5px;
+}
+
+.versus img
+{
+    position: absolute;
+    max-width: 70%;
+    max-height: 70%;
+}
+
+.versus_team_one img
+{
+    top: 60%;
+    left: 40%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1;
+}
+
+.versus_team_two img
+{
+    top: 40%;
+    left: 60%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.round-info-flex
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+.round-info-panel
+{
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 2px 6px #DDDDDD;
+    padding: 20px 10px 20px 10px;
+    font-size: 4vmin;
+    color: #555555;
+}
+
+.round-info-big-number
+{
+    font-size: 10vmin;
+    color: #333333;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.round-info-text
+{
+    display: inline-block;
 }

@@ -1,5 +1,5 @@
 <div ng-repeat="(x, tip) in tips">
-    <div class="row text-center tip-row-v2" style="
+    <div class="text-center tip-row" style="
     background: linear-gradient(to right, rgb(20,20,20), #{{tip.game.home_team.colour}}, rgb(20,20,20), #{{tip.game.away_team.colour}}, rgb(20,20,20))" ng-hide="tip.game.status!='P'">
         <div class="row">
             <div class="col-xs-12">
@@ -9,13 +9,13 @@
         <div class="row" ng-hide="submitting[tip.game.fixture_id]">
             <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.game.home_team.id}"
                  ng-click="updateTip(x, tip.game.home_team)">
-                <img ng-src="/static/images/{{tip.game.home_team.name}}.png" alt="{{tip.game.home_team.name}}"/>
+                <img ng-class="{'not-selected' : tip.team.id != tip.game.home_team.id && tip.team != null}" ng-src="/static/images/{{tip.game.home_team.name}}.png" alt="{{tip.game.home_team.name}}"/>
 
                 <div ng-show="tip.team.id==tip.game.home_team.id"><img src="/static/images/selection.png"/></div>
             </div>
             <div class="col-xs-6" ng-class="{'text-uppercase': tip.team==tip.game.away_team.id}"
                  ng-click="updateTip(x, tip.game.away_team)">
-                <img ng-src="/static/images/{{tip.game.away_team.name}}.png" alt="{{tip.game.away_team.name}}"/>
+                <img ng-class="{'not-selected' : tip.team.id != tip.game.away_team.id && tip.team != null}"  ng-src="/static/images/{{tip.game.away_team.name}}.png" alt="{{tip.game.away_team.name}}"/>
 
                 <div ng-show="tip.team.id==tip.game.away_team.id"><img src="/static/images/selection.png"/></div>
             </div>

@@ -26,7 +26,7 @@ tippingApp.config(
         $routeProvider.
             when('/', {
                 templateUrl: 'static/js/templates/home.html',
-                controller: 'BaseCtrl'
+                controller: 'HomeCtrl'
             }).
             when('/tips', {
                 templateUrl: 'static/js/templates/tipping.html',
@@ -58,8 +58,40 @@ tippingApp.config(
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     });
 
-tippingApp.controller("BaseCtrl", function($scope, $location){
+tippingApp.controller("NavCtrl", function($scope, $location){
     $scope.location = $location;
+});
+
+tippingApp.controller("HomeCtrl", function($scope, $http){
+    $scope.prev = null;
+    $scope.next = null;
+
+    check_tip = function(x){
+        if(x.game.status != 'C' || x.team == null){
+            return false;
+        }
+        if((x.game.home_score >= x.game.away_score) && (x.team.name == x.game.home_team.name)){
+            return true;
+        }
+        if((x.game.home_score <= x.game.away_score) && (x.team.name == x.game.away_team.name)){
+            return true;
+        }
+        return false;
+    }
+
+    updateGame = function(){
+        $http.get("/api/tips/").
+            then(function(data){
+                tips = data.data
+                $scope.next = tips.filter(x => x.game.status=='P')
+                                          .sort((a, b) => a.game.start_time > b.game.start_time)[0]
+                $scope.game = $scope.next.game
+                $scope.num_games = tips.length
+                $scope.num_games_played = tips.filter(x => x.game.status=='C').length
+                $scope.num_correct = tips.filter(check_tip).length
+            })
+    }
+    updateGame()
 });
 
 tippingApp.controller("ScoreCtrl", function($scope, $http){

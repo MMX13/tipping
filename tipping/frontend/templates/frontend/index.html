@@ -1,35 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<body ng-app="TippingApp" ng-controller="BaseCtrl" style="padding-top: 70px;" ng-class={'main-menu':location.path()=='/'}>
-    {% verbatim %}
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #212A37;" ng-hide="location.path() == '/'">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand">Tipeezya</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a data-toggle="collapse" data-target="#myNavbar" href="#/">Home</a></li>
-                    <li><a data-toggle="collapse" data-target="#myNavbar" href="#/tips">Tipping</a></li>
-                    <li><a data-toggle="collapse" data-target="#myNavbar" href="#/past">Past Tips</a></li>
-                    <li><a data-toggle="collapse" data-target="#myNavbar" href="#/scores">Scoreboard</a></li>
-                    <li><a data-toggle="collapse" data-target="#myNavbar" href="#/draw">Draw</a></li>
-                    <li><a data-toggle="collapse" data-target="#myNavbar" href="#/ladder">Ladder</a></li>
-                    <li><a data-toggle="collapse" data-target="#myNavbar" href="#/help">Help</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid" style="padding: 0px 0px 0px 0px;">
-        <div class="ng-view" autoscroll="true"></div>
-    </div>
-
-    {% endverbatim %}
-
+{% verbatim %}
+<body ng-app="TippingApp" ng-controller="NavCtrl">
+	<div class="title-bar">
+			Tipeezya
+	</div>
+	<div class="subnav">
+		<a ng-class="{ bordered : location.$$url=='/'}" href="#/">
+			<span>Dashboard<span>
+		</a>
+		<a ng-class="{ bordered : location.$$url=='/tips'}" href="#/tips">
+			<span>Tips</span>
+		</a>
+		<a ng-class="{ bordered : location.$$url=='/scores'}" href="#/scores">
+			<span>Scores</span>
+		</a>
+		<a class="dropdown-toggle" data-toggle="dropdown">
+			<span>More</span>
+		</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li><a href="#/past">Past Tips</a></li>
+			<li><a href="#/draw">Draw</a></li>
+			<li><a href="#/ladder">Ladder</a></li>
+		</ul>
+	</div>
+	<div class="container">
+		<div class="ng-view"></div>
+	</div>
 </body>
+{% endverbatim %}
 {% endblock %}

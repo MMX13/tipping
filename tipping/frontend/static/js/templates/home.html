@@ -1,16 +1,66 @@
-<div class="row">
-    <div class="col-xs-4 col-xs-offset-4">
-        <img style="width: 100%;" src="/static/images/nrl.png" />
-    </div>
+<div class="welcome">
+	Welcome back!
 </div>
-<div class="row">
-    <div class="col-xs-12 text-center"><p class="page-title">Tipeezya</p></div>
+<div class="index-panel">
+	<h3>Next Game</h3>
+	<div class="next-game" ng-show="next">
+		<div>{{ game.home_team.name }}<br/>
+			vs<br/>
+			{{ game.away_team.name }}<br/>
+			<p>
+			{{ game.start_time | date : 'EEE h:mm a' }}<br/>
+			{{ game.stadium }}</p>
+		</div>
+		<div class="tip-status success" ng-show="next.team">
+			<span class="glyphicon glyphicon-ok-circle"></span>
+			Tip is IN
+		</div>
+		<div class="tip-status fail" ng-hide="next.team">
+			<span class="glyphicon glyphicon-remove-circle"></span>
+			Tip is NOT IN
+		</div>
+	</div>
+	<div class="versus">
+		<div class="versus_team_one">
+			<img src="static/images/{{ game.home_team.name }}.png" />
+		</div>
+		<div class="versus_team_two">
+			<img src="static/images/{{ game.away_team.name }}.png" />
+		</div>
+	</div>
 </div>
-<div class="row">
-    <div class="row"><div class="col-xs-12"><a href="#/tips"><div class="frontpage-link-v2">Tips</div></a></div></div>
-    <div class="row"><div class="col-xs-12"><a href="#/past"><div class="frontpage-link-v2">Past Tips</div></a></div></div>
-    <div class="row"><div class="col-xs-12"><a href="#/scores"><div class="frontpage-link-v2">Scoreboard</div></a></div></div>
-    <div class="row"><div class="col-xs-12"><a href="#/draw"><div class="frontpage-link-v2">Draw</div></a></div></div>
-    <div class="row"><div class="col-xs-12"><a href="#/ladder"><div class="frontpage-link-v2">Ladder</div></a></div></div>
-    <div class="row"><div class="col-xs-12"><a href="#/help"><div class="frontpage-link-v2">Help</div></a></div></div>
+<div class="index-panel" ng-show="next">
+	<h3>Round Info</h3>
+	<div class="round-info-flex">
+		<div class="round-info-panel">
+			<span class="round-info-big-number">{{ num_correct }}</span>
+			<span class="round-info-text">correct<br/>tips</span>
+		</div>
+		<div class="round-info-panel">
+			<span class="round-info-big-number">{{ num_games_played }}</span>
+			<span class="round-info-text">games<br/>played</span>
+		</div>
+		<div class="round-info-panel">
+			<span class="round-info-big-number">{{ num_games }}</span>
+			<span class="round-info-text">games<br/>in round</span>
+		</div>
+	</div>
+</div>
+<div class="index-panel" ng-show="prev">
+	<h3>Previous Round</h3>
+	<div class="round-info-flex">
+		<div class="round-info-panel">
+			<span class="round-info-big-number">6</span>
+			<span class="round-info-text">correct<br/>tips</span>
+		</div>
+		<div class="round-info-panel">
+			<span class="round-info-big-number">8</span>
+			<span class="round-info-text">games<br/>in round</span>
+		</div>
+		<div class="round-info-panel">
+			<b>#</b>
+			<span class="round-info-big-number">2</span>
+			<span class="round-info-text">weekly<br/>rank</span>
+		</div>
+	</div>
 </div>
