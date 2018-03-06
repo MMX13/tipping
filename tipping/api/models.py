@@ -61,7 +61,7 @@ class Game(models.Model):
     away_team = models.ForeignKey(Team, related_name='away_team')
     home_score = models.IntegerField(null=True, blank=True)
     away_score = models.IntegerField(null=True, blank=True)
-    stadium = models.CharField(max_length=30)
+    stadium = models.CharField(max_length=50)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="P")
     special = models.BooleanField(default=False)
 
