@@ -161,7 +161,7 @@ def kickoff_checker():
     logger.info("Checking for kickoffs")
 
     game = Game.objects.filter(round=get_current_round(), status='P').earliest('start_time')
-    countdown = (game.start_time - timezone.now()).seconds
+    countdown = (game.start_time - timezone.now()).total_seconds()
     print("Current time: "+str(timezone.now()))
     print("Start time: "+str(game.start_time))
     print("Game starts in "+str(game.start_time-timezone.now()))
