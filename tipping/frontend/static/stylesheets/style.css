@@ -285,6 +285,37 @@ body
     text-align: center;
 }
 
+.index-loading
+{
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: 100%;
+    background-color: #22905F;
+    z-index: 200;
+    transition: opacity 0.5s;
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+    font-size: 20pt;
+}
+
+.index-loading.fadeout
+{
+    opacity: 0;
+}
+
+.glyphicon.spinning
+{
+    animation: spin 1s infinite linear;
+}
+
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
 .welcome
 {
     font-size: 12pt;

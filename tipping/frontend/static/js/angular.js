@@ -65,6 +65,7 @@ tippingApp.controller("NavCtrl", function($scope, $location){
 tippingApp.controller("HomeCtrl", function($scope, $http){
     $scope.prev = null;
     $scope.next = null;
+    $scope.loaded = false;
 
     check_tip = function(x){
         if(x.game.status != 'C' || x.team == null){
@@ -89,6 +90,7 @@ tippingApp.controller("HomeCtrl", function($scope, $http){
                 $scope.num_games = tips.length
                 $scope.num_games_played = tips.filter(x => x.game.status=='C').length
                 $scope.num_correct = tips.filter(check_tip).length
+                $scope.loaded = true
             })
     }
     updateGame()
