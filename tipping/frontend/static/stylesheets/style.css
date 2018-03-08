@@ -293,7 +293,7 @@ body
     height: 100%;
     background-color: #22905F;
     z-index: 200;
-    transition: opacity 0.5s;
+    transition: opacity 0.5s, visibility 0.5s;
     color: white;
     text-align: center;
     padding-top: 50px;
@@ -303,6 +303,7 @@ body
 .index-loading.fadeout
 {
     opacity: 0;
+    visibility: hidden;
 }
 
 .glyphicon.spinning
