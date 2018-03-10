@@ -165,15 +165,12 @@ def kickoff_checker():
     print("Current time: "+str(timezone.now()))
     print("Start time: "+str(game.start_time))
     print("Game starts in "+str(game.start_time-timezone.now()))
-    if countdown < 60:
-        sleep(countdown)
-        game.status='O'
+    if countdown < 60*10:
+        if countdown > 0:
+            sleep(countdown)
+        game.status = 'O'
         game.save()
         print("Game is closed for tipping")
-        kickoff_checker()
-    elif countdown < 60*10:
-        print("Pausing for kickoff...")
-        sleep(countdown-30)
         kickoff_checker()
 
 def send_reminders():
