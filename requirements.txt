@@ -2,7 +2,7 @@ boto3==1.5.36
 Django==1.9.2
 django-registration==2.0.4
 djangorestframework==3.3.2
-requests==2.9.1
+requests==2.20.0
 gunicorn==19.4.5
 whitenoise==2.0.6
 dj-database-url==0.4.0
