@@ -3,7 +3,7 @@ Django==1.9.2
 django-registration==2.0.4
 djangorestframework==3.3.2
 requests==2.9.1
-gunicorn==19.4.5
+gunicorn==19.5.0
 whitenoise==2.0.6
 dj-database-url==0.4.0
 psycopg2==2.7.4
