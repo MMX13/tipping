@@ -5,5 +5,5 @@ class Command(BaseCommand):
     help = 'Checks for kickoff.'
 
     def handle(self, *args, **options):
-        background_tasks.send_reminders()
+#       background_tasks.send_reminders()
         background_tasks.kickoff_checker()

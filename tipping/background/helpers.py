@@ -33,7 +33,7 @@ def initial_comp_setup():
     for round in range(1, ROUNDS+1):
         logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
-        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/116/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/118/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
 
         if round==1:
             # Setup teams if they don't already exist
@@ -64,8 +64,13 @@ def initial_comp_setup():
             fixture_id = game["fixture_id"]
             round_object = Round.objects.get(round=round)
             game_time = parse_datetime(game["match_start_date"])
-            home_team = Team.objects.get(fox_id=game["team_A"]["id"])
-            away_team = Team.objects.get(fox_id=game["team_B"]["id"])
+            team_a_id = game["team_A"]["id"]
+            team_b_id = game["team_B"]["id"]
+            # This occurs when there are bye rounds
+            if None in [team_a_id, team_b_id]:
+              continue
+            home_team = Team.objects.get(fox_id=team_a_id)
+            away_team = Team.objects.get(fox_id=team_b_id)
             stadium = game["venue"]["name"]
             new_game = Game(fixture_id=fixture_id,
                             start_time = game_time,
@@ -84,7 +89,7 @@ def comp_sync():
     for round in range(get_current_round(), ROUNDS+1):
         logger.info("Fetching round %s/%s...", round, ROUNDS)
         start = datetime.now()
-        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/116/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
+        r = requests.get("http://api.stats.foxsports.com.au/3.0/api/sports/league/series/1/seasons/118/rounds/"+str(round)+"/fixturesandresultswithbyes.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2")
         logger.info("%s", r.text)
         for game in json.loads(r.text):
             logger.info("%s", game["fixture_id"])
